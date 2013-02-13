@@ -1,0 +1,39 @@
+{% extends "bases/main_base.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<div class="container">
+	{% if msg %}
+	<div class="row">
+		<div class="span12">
+			<h3 class="alert alert-success">{{msg}}  <a href=" {% url profile_contest %} ">Return to your profile panel</a></h3> 
+		</div>
+	</div>
+	{% else %}
+		<div class="row">
+			<form action="." method="POST" enctype='multipart/form-data'>
+			{% csrf_token %}
+				<div class="span6">
+					<fieldset>
+						<legend>User Info</legend>
+						{{frmUser}}
+					</fieldset>
+					
+				</div>
+				<div class="span6">
+					<fieldset>
+						<legend>Personal Info</legend>
+						{{frmProfile}}
+					</fieldset>
+				</div>
+				<div class="form-actions">
+					<input class="btn btn-large btn-danger" type="submit" value="Edit your profile info">
+				</div>
+			</form>
+		</div>
+	{% endif %}
+	
+	
+</div>
+{% endblock %}

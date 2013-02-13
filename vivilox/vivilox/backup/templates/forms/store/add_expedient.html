@@ -1,0 +1,52 @@
+{% extends 'bases/main_base.html' %}
+
+{% block title %} New Proposal {% endblock %}
+
+{% block content %}
+<div class="container">
+    <!--  Project Proposals  -->
+    <div class="span12"><h3>Upload items</h3></div>
+    <div class="span12">
+        <form action="." method="POST" id="frmExpedient" name="frmExpedient" class="form-horizontal" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <div id="images">
+        <p><label for="">Image File *</label>
+        <p>{{msg}}</p>
+        <input type='file' name='image' >
+        </p>
+        </div>
+        {{ request.session.item_id_added}}
+        <a id="add_another" href="#" title="Add Image">Add another image</a>
+        <p>
+            <input type="submit" name="addItem" value="Add Item(s)">
+        </p>
+        </form>
+    </div>
+    
+</div><!--End Container-->
+
+{% endblock content %}
+
+{% block footer_extrajs %}
+    
+<script type="text/javascript" >
+
+$(document).on("ready",function(){
+    // Capturo evento para agregar otra campo de imagen dinamicamente
+    $("#add_another").on("click",function(e){
+        e.preventDefault();
+        var num = $(".img").length;
+        num = num + 1;
+        name = "image_" + num.toString();
+        console.log(name); 
+        $("#images").append("<p><input class='img' type='file' name='image' ></p>");
+    });
+});
+
+
+</script>
+
+{% endblock footer_extrajs %}
+
+
+

@@ -1,0 +1,173 @@
+{% extends 'bases/main_base.html' %}
+
+{% block title %} Item Details {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.lightbox-0.5.css">   
+{% endblock extra_css %}
+
+{% block content %}
+{% load watermark %}
+{% load thumbnail %}
+
+<div class="container">
+    <div id="cont_breadcrumb" class="row">
+        <div class="span12">
+            <ul class="breadcrumb">
+              <li><a href=" {% url main_view %} ">Home</a> <span class="divider">/</span></li>
+              <li><a href=" {% url store_view %} ">Store</a> <span class="divider">/</span></li>
+              <li class="active">Item Details</li>
+            </ul>
+        </div>
+    </div>
+	<div class="row">
+        <div class="span4">
+            <h1>{{item.title}}</h1>
+        </div>
+        <div class="span2">
+            <h3 class="title_price">Price</h3>
+            <span class="budget-icon">${{item.price|floatformat:2}}</span>
+        </div>
+        <div class="span2">
+            <h3>Artist</h3>
+            <span class="item_artist"> {{item.user.get_full_name}} </span>
+        </div>
+
+        <div class="span2">
+            {% if purchases %}
+                {# <h3 class="sold_mark">Sold</h3>  #}
+            {% endif %}
+        </div>
+
+        <div class=" span2">
+           
+            {% if not item.user == user and not purchases %}
+                <form action="{% url item_purchase_view %}" method="POST" accept-charset="utf-8">
+                    {% csrf_token %}
+                    <input type="hidden" name="item" value="{{item.id}}">
+                    <input type="submit" name="" value="Purchase Now!" class="orange">
+                </form>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+        <div class="row image-details">
+            <div class="span6 ">
+            {% if purchases %}
+                {% thumbnail item.image_sample "460x320"   crop="center" as im %}
+                    <img id="img_big" src="{{ im.url|watermark:'sold,position=C,opacity=100' }}" upscale width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                {% empty %}
+                    <img id="img_big" src="{{ MEDIA_URL }}no_logo.jpg" alt="">
+                {% endthumbnail %}
+            {% else %}
+                {% thumbnail item.image_sample "460x320"   crop="center" as im %}
+                    <img id="img_big" src="{{ im.url|watermark:'viviloxmark,scale=0.9,position=C,opacity=100' }}" upscale width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                {% empty %}
+                    <img id="img_big" src="{{ MEDIA_URL }}no_logo.jpg" alt="">
+                {% endthumbnail %}
+            {% endif %} 
+            <p class="margintop"><span id="span_description">Description:</span> 
+                {% autoescape off %}
+                    {{item.description}}
+                {% endautoescape %}</p>
+            </div>
+            <div class="span6">
+             {% if expedient %}
+                <p>This article contains:</p>
+                <div id="expedient_items">
+                    
+                    {% for i in expedient  %}
+                        {% if purchases %}
+                            <div class="cont_thumb">
+
+                            {% thumbnail i.image "120x120" crop="center" as im %}
+                             
+                            
+                                {% thumbnail i.image "460x320"   crop="center" as im %}
+                                    <a href="{{ im.url|watermark:'sold,position=C,opacity=100'}}" title="{{i.title}}">
+                                {% endthumbnail %}
+
+                                <img class="imgThumb"  src="{{ im.url|watermark:'soldmini,opacity=100,scale=1'}}" upscale width="{{ im.width }}" height="{{ im.height }}" alt="{{im.title}}"></a>
+
+                                {% thumbnail i.image "460x320"   crop="center" as im %}
+                                    <span class="srcimg" srcimgs="{{ im.url|watermark:'sold,position=C,opacity=100'}}" width="{{ im.width }}" height="{{ im.height }}"></span>
+                                {% endthumbnail %}
+
+
+                            {% endthumbnail %}
+                            
+                            
+                                
+                            </div>
+                        {% else  %}  
+                            <div class="cont_thumb">
+                            
+                            {% thumbnail i.image "120x120" crop="center" as im %}
+
+                                {% thumbnail i.image "460x320"   crop="center" as im %}
+                                     <a href="{{ im.url|watermark:'viviloxmark,position=C,opacity=100'}}" title="{{i.title}}">
+                                {% endthumbnail %}
+
+                                <img class="imgThumb" src="{{ im.url|watermark:'viviloxmark,position=1x50,opacity=100,scale=0.22' }}" upscale width="{{ im.width }}" height="{{ im.height }}" alt="{{im.title}}"></a>
+                                {% thumbnail i.image "460x320"   crop="center" as im %}
+                                    <span class="srcimg" srcimgs="{{ im.url|watermark:'viviloxmark,position=C,opacity=100'}}" width="{{ im.width }}" height="{{ im.height }}"></span>
+                                {% endthumbnail %}
+
+                            {% endthumbnail %}
+                           
+
+                            </div>
+                        {% endif %}
+                        
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <br>
+            {% if item.user == user and not purchases %}
+                <a class="edit" href="{% url item_edit_view item.id %}">Edit</a>
+                <a class="delet" href="{% url delete_item_view item.id %}">Delete</a>
+            {% endif %}
+
+                            
+                
+            
+            </div>
+        </div>
+</div>
+{% endblock content %}
+
+{% block footer_extrajs %}
+<script src="{{STATIC_URL}}js/plugins/jquery.lightbox-0.5.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+var src_original = "";
+
+function show_big_img(e)
+{
+    var src_  = $(this).parent().next("span").attr("srcimgs");
+    $("#img_big")
+    .animate({
+        opacity:0
+    },100,function(){
+        $(this).attr("src",src_);
+    })
+    .animate({
+        opacity:1,
+    },800); 
+
+    // .attr("src",src_);
+}
+function show_feature_img()
+{
+    $("#img_big").attr("src",src_original);
+}
+function inicio()
+{
+    src_original = $("#img_big").attr("src");
+    $("#expedient_items").on("mouseleave",show_feature_img);
+    $(".imgThumb").on("mouseenter",show_big_img);
+    $('.imgThumb').parent("a").lightBox();
+}
+$(document).on("ready",inicio);
+</script>
+{% endblock footer_extrajs %}

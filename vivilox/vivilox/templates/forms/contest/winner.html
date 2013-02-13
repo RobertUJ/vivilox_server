@@ -1,0 +1,13 @@
+{% extends 'bases/main_base.html' %}
+
+{% block title %} New Proposal {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+       		<h2>Winner is: {{ client.first_name }} {{ client.last_name }}</h2>
+       		<p>We have sent an e-mail to the winning Artist. You will be receiving your file(s) very soon. This contest will be closed, if you have any questions feel free to contact us.</p>
+       		<p>Thank you for using VIVILOX.com</p>
+    </div><!--end row-->
+</div><!--End Container-->
+{% endblock content %}

@@ -1,0 +1,175 @@
+{% extends "bases/main_base.html" %}
+
+{% block title %} View All Contests {% endblock %}
+{% block content %}
+{% load thumbnail %}
+{% load watermark %}
+<div class="container">
+        <div id="cont_breadcrumb" class="row">
+            <div class="span12">
+                <ul class="breadcrumb">
+                  <li><a href=" {% url main_view %} ">Home</a> <span class="divider">/</span></li>
+                  <li><a href=" {% url all_contest_view %} ">All Contests</a> <span class="divider">/</span></li>
+                  <li class="active" >Contest Details</li>
+                </ul>
+            </div>
+        </div>
+             <div id="info_contest" class="row">
+                    <div class="span6">
+                        <h3>{{objContest.name}}</h3>
+                    </div>
+                    <div class="span2">
+                        <h3>Proposals</h3>
+                        <span class="number">{{objProposal|length}}</span>
+                    </div>
+                    <div class="time-left span2">
+                        <h3>Time Left</h3>
+                        <span class="time-icon">{{objContest.date_end|timeuntil}}</span>
+                    </div>
+                    <div class="budget span2">
+                        <h3>Budget</h3>
+                        <span class="budget-icon">
+                            {% if objContest.cost.cost == 0 %}
+                                {{objContest.cost_custom|floatformat:2}}
+                            {% else %}
+                                {{objContest.cost.cost|floatformat:2}}
+                            {% endif %}
+                        </span>
+                     </div>
+            </div>
+            <div class="row">
+                <div class="span5">
+                    <h4>Contest launched by: <a href="{% url all_contest_buyer_view objContest.user.id %}">{{ objContest.user.first_name }} {{ objContest.user.last_name }}</h4></a>
+                    {% if objContest.web_site %}
+                        <h4>Web Site: <a target="_blank" href="{{objContest.web_site}}">{{objContest.web_site}}</a> </h4>
+                    {% endif %}
+                    
+                </div>
+                <div class="join-contest-btn offset5 span2"><a class="join-yellow" href="{% url add_new_proposal_form objContest.id  %}">Add Proposal</a></div>
+            </div>      
+            <!--  Project Full Details  -->
+
+              <div class="project-details row">
+                <div class="contest-title row">
+                       <h4></h4>
+                </div>
+                <div class="project-detail-txt span4">
+                    {% thumbnail objContest.logo "200x170" crop="center" as im %}
+                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                    {% empty %}
+                        <img src="{{ MEDIA_URL }}/no_logo.jpg" alt="">
+                    {% endthumbnail %}
+                    
+                </div>
+                <div class="project-detail-list span4">
+                    <p>
+                        {% autoescape off %}
+                        {{objContest.description}}
+                        {% endautoescape %}
+                    </p>
+                </div>
+                <div class="project-detail-links offset1 span3">
+                    <a href="" class="support-files">Reference Files</a><br>
+                    <a href="{% url all_contest_buyer_view objContest.user.id %}" class="blue-link">More from this Client</a>
+                </div>
+            </div>
+
+                    <!--  Project Proposals  -->
+                    <div id='_proposal' class="proposals-grid row">
+                        <h3 class="proposals-h3 span12">Artist's proposals</h3>
+                        <div class="user-prop row">
+                            {% for proposal in objProposal %}
+                            {% if  proposal.discarded %}
+	                            <div class="proposal-thumb descarded">
+                            {% else %}
+                                <div class="proposal-thumb">
+                            {% endif %}        
+	                                <a href="{% url proposal_details_view  proposal.id %}" class="proposal-thumb-link">
+                                     {# Es cliente #}
+                                    {% if user.profile.user_type == "1" %}
+                                        {# Descartado #}
+                                        {% if proposal.discarded %}
+                                            {% thumbnail proposal.resource "158x158"  colorspace="GRAY"  crop="center" as im %}
+                                                <img src="{{ im.url|watermark:'discard,position=C,scale=0.6,opacity=100' }}" upscale width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                                            {% empty %}
+                                                <img src="{{ MEDIA_URL }}no_logo.jpg" alt="">
+                                            {% endthumbnail %}
+                                        {# Vivilox #}
+                                        {% else %}
+                                            {% thumbnail proposal.resource "158x158"  crop="center" as im %}
+                                                <img src="{{ im.url|watermark:'viviloxmark,scale=0.3,position=5x65,opacity=100' }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                                            {% empty %}
+                                                <img src="{{ MEDIA_URL }}no_logo.jpg" alt="">
+                                            {% endthumbnail %}  
+                                        {% endif %}
+
+                                    {# Es Artista #}
+                                    {% else %}
+                                        {% if objContest.private %}
+                                            {# Es Artista y es  privado  #}
+                                            {% if proposal.user == user %}
+                                                {# Es propietario y es privado #}
+                                                {% if proposal.discarded %}
+                                                    {# Esta descartado y es propietario#}
+                                                    {% thumbnail proposal.resource "158x158"  colorspace="GRAY"  crop="center" as im %}
+                                                        <img src="{{ im.url|watermark:'discard,position=C,scale=0.6,opacity=100' }}" upscale width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                                                    {% empty %}
+                                                        <img src="{{ MEDIA_URL }}no_logo.jpg" alt="">
+                                                    {% endthumbnail %}
+                                                {% else %}
+                                                    {# Es propietario y es privado y no esta descartado #}
+                                                    {% thumbnail proposal.resource "158x158"  crop="center" as im %}
+                                                        <img src="{{ im.url|watermark:'viviloxmark,scale=0.3,position=5x65,opacity=100' }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                                                    {% empty %}
+                                                        <img src="{{ MEDIA_URL }}no_logo.jpg" alt="">
+                                                    {% endthumbnail %}
+                                                {% endif %}
+                                            {% else %}
+                                            {# No es propietario y si es privado #}
+                                                <img src="/static/img/privado.png" width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                                            {% endif %}
+                                        {% else %}
+                                        {# No es privado #}
+                                            {% if proposal.discarded %}
+                                                {# Esta descartado y es propietario#}
+                                                {% thumbnail proposal.resource "158x158"  colorspace="GRAY"  crop="center" as im %}
+                                                    <img src="{{ im.url|watermark:'discard,position=C,scale=0.6,opacity=100' }}" upscale width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                                                {% empty %}
+                                                    <img src="{{ MEDIA_URL }}no_logo.jpg" alt="">
+                                                {% endthumbnail %}
+                                            {% else %}
+                                                {# Es propietario y es privado y no esta descartado #}
+                                                {% thumbnail proposal.resource "158x158"  crop="center" as im %}
+                                                    <img src="{{ im.url|watermark:'viviloxmark,scale=0.3,position=5x65,opacity=100' }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                                                {% empty %}
+                                                    <img src="{{ MEDIA_URL }}no_logo.jpg" alt="">
+                                                {% endthumbnail %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+
+                                    </a>
+	                                <div class="username-number">
+                                     <a href="" class="username-link">{{proposal.user.first_name}} {{proposal.user.last_name}}</a>
+                                     <p class="number"> {{forloop.revcounter}}</p>
+                                 </div>
+                                    
+                                    <p>    
+                                        {% if user.profile.user_type == "1" and user == objContest.user %}
+                                            {% if not proposal.discarded %}
+                                                <a class='feedback' href="{% url feedback_add user.id,proposal.user.id,objContest.id,proposal.id %}">Add FeedBack</a>
+                                                <a class='winner' href="{% url winner_view user.id,proposal.user.id,objContest.id,proposal.id %}">Flag as Winner</a>
+                                            {% endif %}
+                                        {% endif %}
+                                    </p>
+                                    
+	                            </div>
+
+                            {% empty %}
+					        	<h5 class="span12">No Entries Yet</h5>  
+					        {% endfor %}
+                        </div>
+                    </div>
+        </div><!--End Container-->
+
+{% endblock %}

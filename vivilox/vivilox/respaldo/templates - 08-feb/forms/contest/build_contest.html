@@ -1,0 +1,200 @@
+{% extends 'bases/main_base.html' %}
+
+{% block title %} Build new contest  {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div id="cont_breadcrumb" class="row">
+        <div class="span12">
+            <ul class="breadcrumb">
+              <li><a href=" {% url main_view %} ">Home</a> <span class="divider">|</span></li>
+              <li><a href=" {% url new_add_contest_view %} ">Select Category</a> <span class="divider">|</span></li>
+              <li  >Create Contest<span class="divider">|</span></li>
+              <li class="active" >Payment</li>
+            </ul>
+        </div>
+    </div>
+	<div class="row">
+		<h3 class='up_item'>Step 2:  Contest Details</h3>
+		<hr>
+		<div class="span12"><h3>{{cat.name}} {{ request.session.cat }}</h3></div>
+		
+		<form id="frmContest" name="frmContest" method="POST" action="." enctype='multipart/form-data'>
+			{% csrf_token %}
+			<!-- Name Contest -->
+			<div class="row">
+			<div class="span4">
+			{% if frmContest.name.errors %}
+				<div class="control-group error">
+			{% else %}
+				<div class="control-group">
+			{% endif %}
+				<label class="control-label" for="name">Name Contest:</label>
+				<div class="controls">
+					{{ frmContest.name }}
+					{% if frmContest.name.errors %}
+						<span class="help-inline">{{frmContest.name.errors}}</span>
+					{% endif %}
+				</div>
+			</div>
+			<!-- Description -->
+			{% if frmContest.description.errors %}
+				<div class="control-group error">
+			{% else %}
+				<div class="control-group">
+			{% endif %}
+				<label class="control-label" >Tell us what you want:</label>
+				<div class="controls">
+					{{ frmContest.description }}
+					{% if frmContest.description.errors %}
+						<span class="help-inline">{{frmContest.description.errors}}</span>
+					{% endif %}
+				</div>
+			</div>
+			<!-- Logo -->
+			{% if frmContest.logo.errors %}
+				<div class="control-group error">
+			{% else %}
+				<div class="control-group">
+			{% endif %}
+				<label class="control-label" >Add reference images (optional):</label>
+				<div class="controls">
+					{{ frmContest.logo }}
+					{% if frmContest.logo.errors %}
+						<span class="help-inline">{{frmContest.logo.errors}}</span>
+					{% endif %}
+				</div>
+			</div>
+		</div><!--end div class4-->
+		<div class="span8">
+			<!-- Cost -->
+			{{frmContest.cost.errors}}
+			{% for c in costs  %}
+					<div class="cont_cost span4">
+						<label class="checkbox inline">
+							<input cost="{{c.cost}}" type="radio" id="id_cost_{{forloop.counter}}" value="{{c.id}}" name="cost">
+						    {% if c.cost == 0 %}
+						    	Custom
+						    {% else %}
+						    	$ {{c.cost|floatformat:2}} USD
+						    {% endif %}
+						</label>	
+						{% autoescape off %}
+							<p>{{c.description|truncatewords_html:20|capfirst}}</p>
+						{% endautoescape %}
+					</div>				
+			{% endfor %}
+			<!-- Cost Custom -->
+			{% if frmContest.cost_custom.errors %}
+				<div id="cont_cost_custom" class="control-group error">
+			{% else %}
+				<div id="cont_cost_custom" class="control-group">
+			{% endif %}
+				<label class="control-label" >Custom cost:</label>
+				<div class="controls">
+					$ {{ frmContest.cost_custom }} USD
+					{% if frmContest.cost_custom.errors %}
+						<span class="help-inline">{{frmContest.cost_custom.errors}}</span>
+					{% endif %}
+				</div>
+			</div>
+			<!-- Duration -->
+			{% if frmContest.duration.errors %}
+				<div class="control-group error">
+			{% else %}
+				<div class="control-group">
+			{% endif %}
+				<label class="control-label" >Duration:</label>
+				<div class="controls">
+					{{ frmContest.duration }}
+					{% if frmContest.duration.errors %}
+						<span class="help-inline">{{frmContest.duration.errors}}</span>
+					{% endif %}
+				</div>
+			</div>
+			<!-- WebSite -->
+			{% if frmContest.web_site.errors %}
+				<div class="control-group error">
+			{% else %}
+				<div class="control-group">
+			{% endif %}
+				<label class="control-label" for="">Web Site:</label>
+				<div class="controls">
+					{{ frmContest.web_site }}
+					{% if frmContest.web_site.errors %}
+						<span class="help-inline">{{frmContest.web_site.errors}}</span>
+					{% endif %}
+				</div>
+			</div>
+			<!-- Private -->
+			{% if frmContest.private.errors %}
+				<div class="control-group error">
+			{% else %}
+				<div class="control-group2">
+			{% endif %}
+				<label class="control-label" >Confidential (only you will see the proposals):</label>
+				<div class="controls">
+					{{ frmContest.private }}
+					{% autoescape off %}
+						<p>{{priv.description}}</p>
+					{% endautoescape %}
+					{% if frmContest.private.errors %}
+						<span class="help-inline">{{frmContest.private.errors}}</span>
+					{% endif %}
+				</div>
+			</div>
+			<!-- Home Page Featured -->
+			{% if frmContest.toprate.errors %}
+				<div class="control-group error">
+			{% else %}
+				<div class="control-group2">
+			{% endif %}
+				<label class="control-label" >Home Page Featured:</label>
+				<div class="controls">
+					{{ frmContest.toprate }}
+					{% autoescape off %}
+						<p>{{toprate.description}}</p>
+					{% endautoescape %}
+					{% if frmContest.toprate.errors %}
+						<span class="help-inline">{{frmContest.toprate.errors}}</span>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+			 {# {{frmContest.as_p}}  #}
+			<input type="hidden" name="id_cat" value="{{idCat}}">
+			<div class="form-actions">
+				<input class="orange" type="submit" name="" value="SAVE">
+				<input class="red2" type="reset" name="" value="Clear">
+			</div>
+			
+		</form>
+
+    </div>
+</div><!--End Container-->
+
+{% endblock content %}
+
+{% block footer_extrajs %}
+	<script type="text/javascript">
+		$(document).on("ready",function(e){
+			// Set configuratino
+			$("#id_name").focus();
+			$("#cont_cost_custom").hide();
+		
+			$("input[name='cost']").on('change',function(){
+				var valor = parseInt($("input[name='cost']:checked").attr('cost'));
+				var divCustom = $("#cont_cost_custom");
+				if (valor == 0){
+					divCustom.fadeIn();
+					divCustom.find("#id_cost_custom").focus();
+				}else{
+					divCustom.find("#id_cost_custom").val('');
+					divCustom.hide();
+				}
+			});
+
+		});
+	</script>
+{% endblock footer_extrajs %}

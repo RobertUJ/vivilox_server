@@ -1,0 +1,53 @@
+{% extends "bases/main_base.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<h3 class="span12">Welcome Back!</h3>
+		<div class="form-form">
+		<div class="span6">
+<form action="." method="POST">
+	{% csrf_token %}
+	{{ msg }}
+	{{ form.as_p }}
+
+	<a class="forgot" href="#">Forgot your password?</a>
+	<a class="register" href="#">Not a member? Register FREE</a>
+	<input class="red" type="submit" value="Login">
+	<input type="hidden" name="next" value="{{ next|escape }}" >
+</form>
+</div>
+<div class="span6">
+<div class="title-form"><h3>Registered Artists Can:</h3> </div>
+<ul class="form-info">
+	<li>Post their Concept Art for sale in the store FREE.</li>
+       <li>Participate in Concept Art Contets and win Cash!</li>
+   
+</ul>
+</div>
+<div class="span6">
+<div class="title-form"><h3>Registered Buyers Can:</h3> </div>
+<ul class="form-info">
+	<li>Access the Concept Art Store FREE.</li>
+       <li>Create Concept Art Contests. (Money back guarantee).</li>
+    
+</ul>
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block footer_extrajs %}
+
+
+	<script type="text/javascript">
+	$(document).on("ready",function(e){
+		$("#id_username").focus();
+	});
+	</script>	
+
+	
+{% endblock footer_extrajs %}
+

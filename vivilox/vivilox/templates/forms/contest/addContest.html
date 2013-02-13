@@ -1,0 +1,131 @@
+{% extends 'bases/main_base.html' %}
+
+{% block title %} New Client {% endblock %}
+{% block extra_css%}<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/plugins/jquery.stepy.css">{% endblock %}
+
+{% block content %}
+<div class="container">
+	<h1 class="span12">New Contest registration</h1>
+	<br>
+	<form id="frmNewContest" method='post' action="." class="form-horizontal" enctype='multipart/form-data'>
+		{% csrf_token %}
+		
+			<fieldset title="Step 1">
+			<legend></legend>
+				<div class="control-group">
+					<label class="control-label" for="name">Name Contest:</label>
+					<div class="controls">
+						{{ frmContest.name }}
+						{{ frmContest.name.errors }}
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="category">Category:</label>
+					<div class="controls">
+						{{ frmContest.category }}
+						{{ frmContest.category.errors }}
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="industry">Industry:</label>
+					<div class="controls">
+						{{ frmContest.industry }}
+						{{ frmContest.industry.errors }}
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="description">Description:</label>
+					<div class="controls">
+						{{ frmContest.description }}
+						{{ frmContest.description.errors }}
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="logo">Reference files:</label>
+					<div class="controls">
+						{{ frmContest.logo }}
+						{{ frmContest.logo.errors }}
+					</div>
+				</div>
+
+			</fieldset>
+
+			<fieldset title="Step 2">
+				<legend></legend>
+				
+				<div class="control-group">
+					<label class="control-label" for="cost">Contest Cost:</label>
+			
+					{% for mOption in frmContest.cost %}
+						<div class="controls">
+							{{mOption}}
+						</div>
+					{% endfor %}
+					{{frmContest.cost.errors}}
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="duration">Contest Duration:</label>
+					
+					{% for mOption in frmContest.duration %}
+						<div class="controls">
+							{{mOption}}
+						</div>
+					{% endfor %}
+						{{ frmContest.duration.errors }}
+		
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="private">Confidential Contest:</label>
+					<div class="controls">
+						{{ frmContest.private }}
+						{{ frmContest.private.errors }}
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label class="control-label" for="toprate">Home Page Featured:</label>
+					<div class="controls">
+						{{ frmContest.toprate }}
+						{{ frmContest.toprate.errors }}
+					</div>
+				</div>
+
+			</fieldset>
+
+			<fieldset title="Step 3">
+				<legend></legend>
+				<h3>Select Payment Method</h3>	
+
+				<h4>Paypal</h4>			
+				<h4>Credit Card</h4>	
+			<p>
+				<input type="submit" value="Create" class="finish">
+			</p>
+			</fieldset>
+
+
+			
+		
+			
+		
+	</form>
+</div>	
+{% endblock content %}
+
+{% block footer_extrajs%}
+<script src="{{ STATIC_URL }}js/plugins/jquery.stepy.min.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$("#frmNewContest").stepy();
+	});
+</script>
+
+{% endblock %}
+
+

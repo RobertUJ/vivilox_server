@@ -1,0 +1,95 @@
+{% extends "bases/main_base.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+	<h4 class="span12">ACCOUNT REGISTRATION </h4>
+	<div id="cont_type_user">
+	<div class="span6 register">
+			<a href="#" type="2" class="Artist btnType">Artists<br /><span>Create account</span></a>			
+	</div>
+		<div class="span6">
+			<a href="#" type="1" class="buyer btnType">Buyers<br /><span>Create account</span></a>
+		</div>
+	</div>
+	</div>
+	<div class="row">
+		<div id="form_div" class="form-form">
+		<div class="span12">
+			{# Contenido #}
+			{% if has_account %}
+				<h3>Thank you for Joining the VIVILOX community!</h3>
+			{% else %}
+				<form id="id_formReg" action="." method="POST">
+					{% csrf_token %}
+					{{ msg }}
+					{{ form.as_p }}
+					<input class="yellow" type="submit" value="Create Account">
+				</form>
+			{% endif %}
+		</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block footer_extrajs%}
+<script type="text/javascript">
+
+
+
+function sel_user_type()
+{
+	var type = $(this).attr("type");
+	$("#id_user_type").val(type);
+	$("#cont_type_user").fadeOut("fast",function(){
+		$("#form_div").fadeIn();
+		$("#id_username").focus();
+	});
+	
+
+
+}
+function hide_province()
+{
+	var select = $(this);
+	var form = $("#id_formReg");
+	var next_p = form.find("p:last");
+	var sel_text = select.find("option:selected").text();
+
+	if (sel_text == "Canadá"){
+		next_p.show();
+	}else{
+		next_p.hide();
+		$("#id_province").find("option:first").attr("selected","selected");
+	}
+
+}
+function inicio()
+{
+	$(".btnType").on("click",sel_user_type);
+	
+	{% if form.errors or msg or has_account %}
+		$("#cont_type_user").hide();
+		$("#form_div").show();
+
+	{% endif %}
+
+	$("#id_country").on("change",hide_province);
+
+	var seleccionado = $("#id_country").find("option:selected").text();
+	var form_ = $("#id_formReg");
+	var next_p = form_.find("p:last");
+
+	if (seleccionado != "Canadá")
+	{
+		next_p.hide();
+	}
+
+}
+$(document).on("ready",inicio);
+</script>
+
+
+{% endblock %}

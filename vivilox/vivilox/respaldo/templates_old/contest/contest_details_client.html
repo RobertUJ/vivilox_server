@@ -1,0 +1,71 @@
+{% extends "bases/main_base.html" %}
+
+{% block title %} View All Contests {% endblock %}
+
+{% block content %}
+{% load thumbnail %}
+<div class="container">
+         <div class="row">
+                    <h3 class="span6">{{objContest.name}}</h3>
+                     <div class="time-left span2">
+                    <h3>Time Left</h3>
+                    <span class="time-icon">9 days</span>
+                </div>
+                <div class="budget span2">
+                    <h3>Budget</h3>
+                    <span class="budet-icon">{{objContest.cost.cost|floatformat:2}}</span>
+                </div>
+                <div class="join-contest-btn span2"><a class="join-yellow" href="{% url add_new_proposal_form objContest.id  %}">Add Proposal</a></div>
+                </div>      
+            <!--  Project Full Details  -->
+
+              <div class="project-details row">
+                <div class="contest-title row">
+                       <h4></h4>
+                </div>
+                <div class="project-detail-txt span4">
+                    {% thumbnail objContest.logo "200x170" crop="center" as im %}
+                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                    {% empty %}
+                        <img src="{{ MEDIA_URL }}/no_logo.jpg" alt="">
+                    {% endthumbnail %}
+                    
+                </div>
+                <div class="project-detail-list span4">
+                    <p>
+                        {% autoescape off %}
+                        {{objContest.description}}
+                        {% endautoescape %}
+                    </p>
+                </div>
+                <div class="project-detail-links span4">
+                    <a href="" class="support-files">Support Files</a><br>
+                    <a href="" class="blue-link">Other Contests from this buyer</a>
+                </div>
+            </div>
+                    <!--  Project Proposals  -->
+                    <div id='_proposal' class="proposals-grid row">
+                        <h3 class="proposals-h3">User proposals</h3>
+                        <div class="user-prop row">
+                            
+                            {% for proposal in objProposal %}
+
+	                            <div class="proposal-thumb">
+	                                <a href="" class="proposal-thumb-link">
+                                        {% thumbnail proposal.resource "158x158" crop="center" as im %}
+                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{proposal.title}}">
+                                        {% empty %}
+                                            <img src="{{ MEDIA_URL }}/no_logo.jpg" alt="">
+                                        {% endthumbnail %}
+                                    </a>
+	                                <p><a href="" class="username-link">{{proposal.user.first_name}} {{proposal.user.last_name}}</a></p>
+	                            </div>
+
+                            {% empty %}
+					        	<h3>No Proposal</h3>  
+					        {% endfor %}
+                        </div>
+                    </div>
+        </div><!--End Container-->
+
+{% endblock %}

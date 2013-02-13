@@ -1,0 +1,105 @@
+{% extends 'bases/main_base.html' %}
+
+{% block title %} Store {% endblock %}
+
+{% block content %}
+{% load thumbnail %}
+{% load watermark %}
+<div class="container">
+    <div id="cont_breadcrumb" class="row">
+        <div class="span12">
+            <ul class="breadcrumb">
+              <li><a href=" {% url main_view %} ">Home</a> <span class="divider">/</span></li>
+              <li class="active">Store</li>
+            </ul>
+        </div>
+    </div>
+        <div class="row">
+            <div class="span12"><h3>VIVILOX CONCEPT ART STORE</h3></div>
+        </div>
+        <div class="row select-store">
+            <div class="span3">
+                <form id='frmCategory' action='' method='POST'>
+                    {% csrf_token %}
+                    <select name="category" id="id_category">
+                        <option value="0">All Categories</option>
+                        {% for category in objCategory %}
+                            <option value="{{category.id}}">{{category.name}}</option>                
+                        {% endfor %}
+                    </select>
+                </form>
+            </div>
+            <!--
+            <div class="span3">
+                <select>
+                    <option>Price</option>
+                    <option>Price</option>
+                </select>
+            </div>
+            <div class="span3">
+                <select>
+                    <option>Show</option>
+                    <option>12 items</option>
+                </select>
+            </div>
+            -->
+            <div class="span3"> 
+                {% if user.is_authenticated and user.profile.user_type == "2" %}
+                                                        <a class="yellow" href="{% url store_add_item_view %}">Add Your Art!</a>
+                {% endif %}
+            </div>
+        </div>
+        <!--  Products Store -->
+        
+        <div class="row store-products">
+            {% for item in objItems %}
+                <div class="span3">
+                    <a href="{% url image_details_view item.id %}"  class="proposal-thumb-link">
+                        {% if item.sold %}
+                            {% thumbnail item.image_sample "158x158" colorspace="GRAY" crop="50% center" as im %}
+                                <img src="{{ im.url|watermark:'soldmini,scale=0.5,position=110x110' }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{item.title}}">
+                            {% endthumbnail %}
+                        {% else %} 
+                            {% thumbnail item.image_sample "158x158" crop="50% center" as im %}
+                                <img src="{{ im.url|watermark:'viviloxmark,scale=0.3,position=5x65' }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{item.title}}">
+                            {% endthumbnail %}
+                        {% endif %}
+                    </a>
+                    <span class="producto-title">{{item.title}}</span><br>
+                    <span class="price">Price: $ {{item.price|floatformat:2}} </span>
+                </div>
+            {% empty %}
+                No Items in Store
+            {% endfor %}
+        </div>
+
+<div class="span12">
+        <div class="pagination">
+            <span class="step-links">
+                <ul>
+                {% for pag in objItems.paginator.page_range %}
+                    <li>
+                        <a href="?page={{pag}}">{{pag}}</a>  
+                    </li>   
+                {% endfor %}
+                </ul>
+            </span>
+        </div>
+</div>
+       
+        </div>
+        <!--End Container-->
+
+{% endblock content%}
+
+{% block footer_extrajs %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#id_category").val('{{idCat}}');
+        $("#id_category").on('change',function(){
+            $("#frmCategory").submit();
+        });
+    });
+</script>
+{% endblock %}
+
