@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>{% block title %} Vivilox :: A good design lives forever {% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- CSS -->
+    {% block css %}
+        <link type="text/css" rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="{{STATIC_URL}}css/estilos.css">
+        <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
+        {% block extra_css %}{% endblock %}
+    {% endblock %}
+    <!-- Javascript --> 
+    {% block header_js %}
+        <!--<script src="{{STATIC_URL}}js/vendor/modernizr-2.6.1.min.js"></script>-->
+    {% endblock %}
+    {% block header_extrajs %}{% endblock %}
+</head>
+<body>
+<div class="container" id="shadow">
+<div class="container">
+	<!-- Header -->   	
+    <header>
+	    <div id="top-header" class="row">
+		<div id="logo" class="span3">
+			<a href="{% url main_view %}"></a>
+		</div>
+		<div id="top-menu" class="span5">
+			<ul>
+                <li><a href="{% url store_view %}">Concept Art Store</a></li>
+				<li><a href="{% url new_add_contest_view %}">Create a Contest</a></li>
+			</ul>
+		</div>
+		<div id="user-login" class="span4">
+			<ul>
+                {% if user.is_authenticated %}
+                    <li>Welcome</li>
+                    {% if request.user.profile.image %}
+                        <li><img width="27px" height="27px" src="{{ MEDIA_URL }}{{request.user.profile.image}} " alt=""> <a href="{% url profile_contest %}">{{ user.get_full_name }}</a></li>    
+                    {% else %}
+                        <li><a class="user-reg"   href="{% url profile_contest %}">{{ user.get_full_name }}</a></li>
+                    {% endif %}
+                    
+                    <li><a class="user-login" href="{% url view_logout %}">Logout</a></li>
+                {% else %}
+                    <li><a class="user-reg" href="{% url new_user_view %}">Register</a></li>
+                    <li><a class="user-login" href="{% url view_login %}">Login</a></li>                
+                {% endif %}                
+			</ul>	
+		</div>
+		</div>
+    </header>
+</div>
+<!-- / Header -->    
+
+{% block content %}
+
+{% endblock content%}
+
+<!-- Footer --> 
+<div class="container">
+<footer>
+	<div class="row">
+        <div class="span2 footer-mod">
+            <h4>What do yo need</h4>
+            <ul>
+                {% for c in ctxpro_contests_categories  %}
+                    <li><a class="link-cat" id-cat="{{c.id}}" href="#" title="{{c.name}}"> {{c.name}}</a></li>
+                {% endfor %}
+            </ul>
+            <a href="{% url new_add_contest_view %}">Create a Contest</a>
+        </div>   
+
+        <div class="span2">
+            <h4>Top rated items</h4>
+            <ul>
+                {% for item in ctxpro_top_rated_items  %}
+                    {% if not item.sold %}
+                        <li><a href=" {% url image_details_view item.id %} ">{{item.title}}</a></li>
+                    {% endif %}                    
+                {% endfor %}
+            </ul>    
+            <a href="{% url store_view %}">Go to Store</a>        
+        </div>
+    
+         <div class="span2 footer-mod">
+            <h4>Top rated projects</h4>
+            <ul>
+                {% for cont in ctxpro_top_rated_contest  %}
+                    {% if cont.toprate %}
+                        <li> <a href=" {% url contest_details_view cont.id %} " title=""> {{cont.name}} </a> </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <a href="{% url top_contest_view %}">View all Top Rated</a>
+        </div> 
+        <div class="span3 footer-mod">
+            <h4 class="tweet">Latest Tweets</h4>
+            {% for t in tweets  %}
+                <p>{# tweet from {{ t.date|date:"D d M Y P" }}:  #}{{ t.text }}<p>
+            {% empty %}
+                No tweets      
+            {% endfor %}
+            {# <p><img src="/media/img/placeholder.png" /></p> #}
+            <a class="twt-button" target="_blank" href="https://twitter.com/VIVILOXart">Follow Us</a>
+        </div> <!--End Span3-->    
+         <div class="span3 footer-mod">
+            <h4 class="fb">Facebook</h4>
+                <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FVIVILOXcom%2F366030400153958&amp;width=220&amp;height=558&amp;show_faces=true&amp;colorscheme=light&amp;stream=true&amp;border_color=%23393942&amp;header=false&amp;appId=123366741102352" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:220px; height:558px;" allowTransparency="true"></iframe>
+            <div id="icons">
+
+            <h4>Follow Us</h4>
+                <a class="fb" href="http://www.facebook.com/pages/VIVILOXcom/366030400153958"></a>
+                <a class="twt" href="https://twitter.com/viviloxart"></a>    
+                <a class="google" href="#"></a>    
+            </div>
+        </div> <!--End Span3-->    
+    </div>
+    <div class="row">
+        <div class="span12">
+        <ul id="footner-menu">
+            {% load flatpages %}
+            {% get_flatpages as flatpages %}
+            {% for page in flatpages %}
+                    <li><a   href="{{ page.url }}">{{ page.title }}</a></li>
+                {% if forloop.last %}
+                    <li><a class="last" href="{% url contact_view %}">Contact</a></li> 
+                {% endif %}
+            {% endfor %}
+            </ul> 
+            {{ HttpRequest.path  }}      
+        </div><!--End Span12-->
+    </div><!--End Row-->
+    <div class="row">
+        <div class="span3 offset9">
+            <div id="copyright">
+                <p>2012 Copyright - Pictura Arts Inc.</p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+</div> <!-- content div -->
+<div class="row">
+    <form id="frm_cat_base"   action=" {% url set_category_contest_view %} " method="POST" name="">
+        {% csrf_token %}
+        <input id="id_cat_input" type="hidden" value="1" name="id_cat">
+    </form>
+</div>
+
+
+{% block footer_js %}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
+
+    <script>
+        function submit_cat(e)
+        {
+            e.preventDefault();
+            var _cat = $(this).attr("id-cat");
+            $("#id_cat_input").val(_cat);
+            $("#frm_cat_base").submit();
+        }
+        function start_base()
+        {
+            $(".link-cat").on("click",submit_cat);
+        }
+        $(document).on("ready",start_base);
+    </script>
+
+    {% block footer_extrajs%}{% endblock %}
+{% endblock %}
+
+<div class="clear"></div>
+</div>
+</body>
+</html>

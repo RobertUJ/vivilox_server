@@ -1,0 +1,7 @@
+# Compiled source #
+###################
+*.pyc
+*.pot
+*.pyc
+
+django/vivilox/vivilox/local_settings.py
