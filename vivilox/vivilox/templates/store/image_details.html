@@ -83,7 +83,7 @@
                             {% thumbnail i.image "120x120" crop="center" as im %}
                              
                             
-                                {% thumbnail i.image "460x320"   crop="center" as im %}
+                                {% thumbnail i.image "920x640"   crop="center" as im %}
                                     <a href="{{ im.url|watermark:'sold,position=C,opacity=100'}}" title="{{i.title}}">
                                 {% endthumbnail %}
 
@@ -104,7 +104,7 @@
                             
                             {% thumbnail i.image "120x120" crop="center" as im %}
 
-                                {% thumbnail i.image "460x320"   crop="center" as im %}
+                                {% thumbnail i.image "920x640"   crop="center" as im %}
                                      <a href="{{ im.url|watermark:'viviloxmark,position=C,opacity=100'}}" title="{{i.title}}">
                                 {% endthumbnail %}
 
