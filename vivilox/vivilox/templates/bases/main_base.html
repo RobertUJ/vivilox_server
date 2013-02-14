@@ -70,32 +70,35 @@
         <div class="span2 footer-mod">
             <h4>What do yo need</h4>
             <ul>
-                {% for c in objCatCont  %}
+                {% for c in ctxpro_contests_categories  %}
                     <li><a class="link-cat" id-cat="{{c.id}}" href="#" title="{{c.name}}"> {{c.name}}</a></li>
                 {% endfor %}
             </ul>
+            <a href="{% url new_add_contest_view %}">Create a Contest</a>
         </div>   
 
         <div class="span2">
             <h4>Top rated items</h4>
             <ul>
-                {% for item in objStore  %}
+                {% for item in ctxpro_top_rated_items  %}
                     {% if not item.sold %}
                         <li><a href=" {% url image_details_view item.id %} ">{{item.title}}</a></li>
                     {% endif %}                    
                 {% endfor %}
-            </ul>            
+            </ul>    
+            <a href="{% url store_view %}">Go to Store</a>        
         </div>
     
          <div class="span2 footer-mod">
             <h4>Top rated projects</h4>
             <ul>
-                {% for cont in objCont_feature  %}
+                {% for cont in ctxpro_top_rated_contest  %}
                     {% if cont.toprate %}
                         <li> <a href=" {% url contest_details_view cont.id %} " title=""> {{cont.name}} </a> </li>
                     {% endif %}
                 {% endfor %}
             </ul>
+            <a href="{% url top_contest_view %}">View all Top Rated</a>
         </div> 
         <div class="span3 footer-mod">
             <h4 class="tweet">Latest Tweets</h4>
