@@ -90,7 +90,9 @@ def view_all_contest(request):
 	except EmptyPage:
 		obj_contest = paginator.page(paginator.num_pages)
 
-	ctx = {'objContest':obj_contest,'objCategory':_objCategory,'idCat':idCategory,'date':datetime.datetime.now()}
+
+	_proposal_search = proposal.objects.filter(user=request.user)
+	ctx = {'myC':1,'myproposals':_proposal_search, 'objContest':obj_contest,'objCategory':_objCategory,'idCat':idCategory,'date':datetime.datetime.now()}
 	return render_to_response('contest/view_all.html',ctx,context_instance=RequestContext(request))
 
 def view_top_contest(request):
