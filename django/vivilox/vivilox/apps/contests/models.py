@@ -62,7 +62,7 @@ class contest(models.Model):
 	cost_custom = models.FloatField(null=True,blank=True)
 	duration	= models.ForeignKey(duration)
 	web_site	= models.URLField(verify_exists=True,max_length=150,blank=True,null=True)
-	date_start  = models.DateTimeField(auto_now=True)
+	date_start  = models.DateTimeField(auto_now_add=True)
 	date_end    = models.DateTimeField(blank=True,null=True)
 	private 	= models.BooleanField(default=False)
 	toprate 	= models.BooleanField(default=False)
@@ -88,7 +88,7 @@ class proposal(models.Model):
 	resource 	= models.FileField(upload_to='contests/proposal')
 	comment		= models.TextField()
 	status		= models.BooleanField(default=True)
-	date 		= models.DateField(auto_now=True)
+	date 		= models.DateField(auto_now_add=True)
 	discarded	= models.BooleanField(default=False)
 	user 		= models.ForeignKey(User)
 	contest 	= models.ForeignKey(contest)
@@ -101,7 +101,14 @@ class proposal_feedback(models.Model):
 	proposal 		= models.ForeignKey(proposal)
 	client_p	 	= models.ForeignKey(User,related_name="Artist_Proposal")
 	artist_p		= models.ForeignKey(User,related_name="Client_Proyect")
-	datetime		= models.DateTimeField(auto_now=True)
+	datetime		= models.DateTimeField(auto_now_add=True)
 	sender 			= models.ForeignKey(User,related_name="User_Sender")
 	def __unicode__(self):
 		return "%s ==> %s" % (self.proposal.contest.name,self.proposal.title)
+
+
+
+
+
+
+		

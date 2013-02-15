@@ -13,11 +13,8 @@ import twitter
 
 def index_view(request):
 	_objContest = contest.objects.filter(finished=False).order_by('-toprate','-id')[:6]
-	_objStore   = item.objects.all().order_by('-top_rated', '-id')[:6]
-	_objCat = cat_store.objects.filter(active=True).order_by('name')	
-	_objCatContest = cat_contest.objects.filter(status=True)
-
-	ctx = {'objContest': _objContest,'objCont_feature':_objContest, 'objStore':_objStore,'objCat':_objCat,'objCatCont':_objCatContest}
+	_objStore   = _top_rated_items = item.objects.annotate(item_sold = Count('purchases')).filter(item_sold__exact=0,top_rated=True).order_by('-id')[:6]
+	ctx = {'objContest': _objContest,'objStore':_objStore,}
 	return render_to_response('home/home.html',ctx,context_instance=RequestContext(request))
 
 # Funcion para el formulario de contacto

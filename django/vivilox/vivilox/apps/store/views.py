@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 # Agregar Formulario
 from vivilox.apps.store.models import category, item, top_rated_cost, expedient_item, purchases,downloads
+from vivilox.apps.store.models import top_rated_text,license_text
 #Carga de formularios
 from vivilox.apps.store.forms import add_item_store,frmExpedient
 # Librerias o herramientas para proceso de informacion
@@ -43,7 +44,8 @@ def isArtist(fn):
 def store(request):
 	if request.method == "POST":
 		idCategory = int(request.POST['category'])
-		
+		print idCategory
+
 		if idCategory == 0:
 		 	_items	= item.objects.all().annotate(sold = Count('purchases')).order_by('-id')
 		else:
@@ -124,7 +126,12 @@ def add_item(request):
 			return HttpResponseRedirect("/store/expedient/new/")			
 	else:
 		frmItem = add_item_store()
-	ctx = {'objForm':frmItem}
+
+
+	_text_top_rated = top_rated_text.objects.all().order_by("-date")[0]
+	_license_text = license_text.objects.all().order_by("-date")[0]
+
+	ctx = {'objForm':frmItem,'objTextTop':_text_top_rated,'objTextLicense':_license_text}
 	return render_to_response('forms/store/add_item_store.html',ctx,context_instance=RequestContext(request))
 
 

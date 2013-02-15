@@ -51,3 +51,25 @@ class downloads(models.Model):
 	date			= models.DateTimeField(auto_now=True)
 	def __unicode__(self):
 		return "%s %s | %s"%(self.user.first_name,self.user.last_name,self.item_purchased.item.title)
+
+
+
+class top_rated_text(models.Model):
+	text = models.TextField()
+	date = models.DateField(auto_now_add=True)
+	class Meta:
+	    verbose_name = "Top Rated text"
+	    verbose_name_plural = "Top Rated text for item store"
+
+	def __unicode__(self):
+		return "%s" % self.date
+
+class license_text(models.Model):
+	text = models.TextField()
+	date = models.DateField(auto_now_add=True)
+	class Meta:
+	    verbose_name = "License Text"
+	    verbose_name_plural = "License text for item store"
+
+	def __unicode__(self):
+		return "%s" % self.date

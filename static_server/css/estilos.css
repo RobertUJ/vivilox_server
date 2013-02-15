@@ -2129,3 +2129,6 @@ ul.errorlist {
 .form_reply{
 	display: none;
 }
+.project-thumb-img .span2{
+	margin-left: 0px;
+}
