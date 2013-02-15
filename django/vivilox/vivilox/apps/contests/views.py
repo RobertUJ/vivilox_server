@@ -320,6 +320,107 @@ def buid_contest(request):
 
 @login_required
 @isClient
+def edit_contest(request,idContest):
+	_objContest = get_object_or_404(contest,pk=idContest)
+	if _objContest.user != request.user:
+		ctx={'message':'This contest is not yours','title':"Warning"}
+		return render_to_response('message/message.html',ctx,context_instance=RequestContext(request))
+	idCat = _objContest.category.id
+	objCat = _objContest.category
+	# Get costs by Category
+	if objCat:
+		objPrice = cost.objects.filter(category=objCat,status=True).order_by('cost')
+		objCostPrivate = private_cost.objects.order_by('id')[0]
+		objCostTopRate = top_rated_cost.objects.order_by('id')[0]
+	else:
+		objPrice = None
+		objCostPrivate = None
+		objCostTopRate = None
+
+	# Save contest new
+	if request.method == "POST":
+		# contest,resource,proposal,category,proposal_feedback,cost,duration
+		# user,name,category,industry,description,logo,cost,cost_custom,duration,date_start,date_end,private,toprate		active 			finished	total_cost 
+		_frmContest = buildContest(request.POST,request.FILES,instance=_objContest)
+		if _frmContest.is_valid():
+			frmUncommited = _frmContest.save(commit=False)
+			# form.cleaned_data['subject']
+			subTotal = 0.00
+			CostSelected = _frmContest.cleaned_data['cost']
+			subTotal += float("%s"%CostSelected)
+
+			print "Subtotal + CostoSeleccionado %s " % subTotal
+
+			customCost = _frmContest.cleaned_data['cost_custom']
+			
+			if customCost:
+				subTotal += float("%s"%customCost)
+		
+			print "Custom cost: %s" % customCost
+			
+			# get cost duration range
+			
+			idDur = int(request.POST['duration'])
+			print idDur
+			
+			try:
+				_duration = duration.objects.get(id=idDur)
+				
+			except:
+				_duration = None
+				
+			if _duration:
+				costDuration = _duration.cost
+				# Sum Days for finish date
+				days = _duration.duration
+				diffDays = datetime.timedelta(days=days)
+				now_ = datetime.datetime.now()
+				dateFinish = now_ + diffDays
+			else:
+				costDuration = 0
+				dateFinish = datetime.datetime.now()
+
+			# Sum subTotal Duration 
+			subTotal += costDuration
+			frmUncommited.date_end = dateFinish
+
+			# Is a Private Contest?
+			isPrivate = _frmContest.cleaned_data['private']
+
+			if isPrivate:
+				costPrivate = objCostPrivate.cost
+			else:
+				costPrivate = 0
+			subTotal += costPrivate
+
+			# Is Top Rate Contest?
+			isTopRate = _frmContest.cleaned_data['toprate']
+			if isTopRate:
+				costTopRate = objCostTopRate.cost
+			else:
+				costTopRate = 0
+			subTotal += costTopRate
+			# Add Total Cost
+			frmUncommited.total_cost = subTotal
+			frmUncommited.user = request.user
+			frmUncommited.category = category.objects.get(id=idCat)
+			frmUncommited.save()	
+			ctx = {'infoContest':frmUncommited}
+			return render_to_response('contest/resume.html',ctx,context_instance=RequestContext(request))
+			return HttpResponseRedirect('/contest.all/')
+
+		else:
+			ctx = {'frmContest':_frmContest,'idCat':idCat,'cat':objCat,'costs':objPrice,'priv':objCostPrivate,'toprate':objCostTopRate}
+	else:
+		_frmContest = buildContest(instance=_objContest)
+		ctx = {'frmContest':_frmContest,'idCat':idCat,'cat':objCat,'costs':objPrice,'priv':objCostPrivate,'toprate':objCostTopRate}
+	
+	return render_to_response('forms/contest/build_contest.html',ctx,context_instance=RequestContext(request))
+
+
+
+@login_required
+@isClient
 def resume_contest(request):
 	_contest = contest.objects.filter(user=request.user).order_by('-pk')[0]
 	if not _contest.paid:

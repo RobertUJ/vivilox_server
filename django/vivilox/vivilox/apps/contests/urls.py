@@ -10,6 +10,7 @@ urlpatterns = patterns('vivilox.apps.contests.views',
 	url(r'^contest.new/$','get_categories',name='new_add_contest_view'),
 	url(r'^contest.cat/$','define_category',name='set_category_contest_view'),
 	url(r'^contest.build/$','buid_contest',name='build_contest_new_view'),
+	url(r'^contest.edit/(\d{1,6})/$','edit_contest',name='edit_contest_new_view'),
 	url(r'^contest.new/resume/$','resume_contest',name='resume_contest_new_view'),
 	
 

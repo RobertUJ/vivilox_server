@@ -21,6 +21,19 @@ class buildContest(forms.ModelForm):
 
 
 
+class editContest(forms.ModelForm):
+	m_costs = cost.objects.filter(status=True).order_by('order', 'cost')
+
+  	cost = MyCostModelChoiceField(queryset=m_costs,
+ 								  widget=forms.RadioSelect(),
+ 								  empty_label=None)
+	class Meta:
+		model = contest
+		exclude = ['industry','date_finish','user','active','finished','category','date_end','total_cost','paid',]
+
+
+
+
 class addContestForm(forms.ModelForm):
 	name = forms.CharField(
  		max_length=255,
