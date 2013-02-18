@@ -1,5 +1,7 @@
 /* @override http://vivilox.webfactional.com/static/css/estilos.css */
 
+/* @override http://vivilox.webfactional.com/static/css/estilos.css */
+
 /* @override http://192.168.0.117:9000/static/css/estilos.css */
 
 #logo a {
@@ -295,10 +297,19 @@ a.yellow {
 	height: 49px;
 	padding-left: 28px;
 }
-
-h3.up_item {
+h3.up_item span{
+	background-color: #b60100;
+	display: block;
+	height: 42px;
+}
+h3.up_item{
 	color: #fff;
-	background-color: #b60000;
+	margin-top: 15px;
+	background: url(/static/img/steps-stores.png) no-repeat right 1px;
+	display: block;
+	padding-right: 21px;
+	height: 40px;
+	font-size: 18px;
 	text-align: center;
 }
 
@@ -1651,6 +1662,51 @@ a.contact {
 	font-size: 12px;
 	color: #38363f;
 }
+div.row.steps-str h4 span{
+	display: block;
+	background-color: #c1c1c1;
+	height: 40px;
+	border: 1px solid #b2b2b2;
+	border-right: none;
+	color: #727272;
+	padding-left: 30px;
+}
+
+div.row.steps-str div.span4 {
+	margin-left: -22px;
+	position: relative;
+	width: 325px;
+	left: 36px;
+}
+a.edit_contest:hover{
+	background-color: #000;
+	text-decoration:none;
+}
+a.edit_contest {
+	background: #393942 url(/static/img/icon-edit.png) no-repeat 9px center;
+	padding: 10px 20px 10px 40px;
+	color: #fff;
+}
+
+div.span4.step1 {
+	position: relative;
+	z-index: 3;
+}
+
+div.span4.step2 {
+	z-index: 2;
+}
+div.row.steps-str h4{
+	margin-bottom: 0;
+	display: block;
+	background: url(/static/img/steps-stores.png) no-repeat right bottom;
+	height: 40px;
+	margin-top: 15px;
+	line-height: 38px;
+	padding-right: 21px;
+	text-align: center;
+
+}
 
 a.view-project {
 	background: url(/static/img/icon-view.png) no-repeat;
@@ -1661,6 +1717,8 @@ a.view-project {
 	padding-top: 2px;
 	height: 21px;
 	display: block;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 a.not_view-project {
@@ -1855,7 +1913,7 @@ div#all_contest h3{
 }
 
 body {
-	background: url(/static/img/background.png) no-repeat top center;
+	background: url(/static/img/background.png) repeat;
 }
 a.buyer {
 
@@ -2096,9 +2154,9 @@ div#top-menu.span5 {
 }
 
 div#shadow.container {
- -moz-box-shadow: 0px 0px 60px #bbb;
-    -webkit-box-shadow: 0px 0px 60px #bbb;
-    box-shadow: 0px 0px 60px #bbb;
+ -moz-box-shadow: 0px 0px 60px #000000;
+    -webkit-box-shadow: 0px 0px 60px #000000;
+    box-shadow: 0px 0px 60px #000000;
 }
 
 #form_div{
@@ -2130,5 +2188,6 @@ ul.errorlist {
 	display: none;
 }
 .project-thumb-img .span2{
-	margin-left: 0px;
+	margin-left: 12px;
+	margin-bottom: 12px;
 }
