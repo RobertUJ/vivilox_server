@@ -40,7 +40,7 @@
                     {% if user.profile.user_type == "2" %}
                         <li><a class="store item_menu" href="{% url my_store_view %}">My Store</a></li>                        
                         <li><a class="submissions item_menu " href="{% url profile_contest %}">My Submissions</a></li>
-                        <li><a class="notifications item_menu active_link" href="{% url feedback_view %}">Notifications</a></li>  
+                        <li><a class="notifications item_menu active_link" href="{% url feedback_view %}">Private messages</a></li>  
                         <li><a class="purchased item_menu " href="{% url purchased_images_view %}">Purchased Images</a></li>                </ul>
                     {% else %}
                         <li><a class="submissions item_menu" href=" {% url profile_contest %}">My Contest</a></li>
