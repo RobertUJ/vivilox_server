@@ -2,6 +2,7 @@ from django.conf.urls.defaults import patterns,url
 
 urlpatterns = patterns('vivilox.apps.store.views',
 	url(r'^store/$','store',name='store_view'),
+	url(r'^store.top/$','store_top',name='store_top_view'),
 	url(r'^store/item/new/$','add_item',name='store_add_item_view'),
 	url(r'^store/item/details/(\d{1,6})/$','image_details',name='image_details_view'),
 	url(r'^store/item/purchase/$','purchase_item',name="item_purchase_view"),

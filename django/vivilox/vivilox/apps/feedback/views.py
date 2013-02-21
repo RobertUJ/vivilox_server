@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 #Models
 from vivilox.apps.feedback.models 	import feedbacks
 from django.contrib.auth.models 	import User
-from vivilox.apps.contests.models 	import proposal,contest
+from vivilox.apps.contests.models 	import proposal,contest,proposal_feedback
+
 #Forms
 from vivilox.apps.feedback.forms 	import formFeedBack
 #Libs & Tools
@@ -25,12 +26,14 @@ def view_feedback(request):
 	user_type = request.user.profile.user_type
 	idContest = 0
 	if request.method == "POST":
-		idContest = int(request.POST['idContest'])
+		idContest = int(request.POST.get('idContest',0))
 		if idContest == 0:
 			if user_type == "1":
-				_feedback = feedbacks.objects.filter(client=_user)
+				_feedback = feedbacks.objects.filter(client=_user).order_by("-id")
+				_feedback_proposal = proposal_feedback.objects.filter(client_p=_user).order_by("-id")
 			elif user_type == "2":
 				_feedback = feedbacks.objects.filter(artist=_user).order_by("-id")
+				_feedback_proposal = proposal_feedback.objects.filter(artist_p=_user).order_by("-id")
 			elif user_type == "3":
 				return HttpResponseRedirect('/admin/')
 			else:
@@ -40,8 +43,10 @@ def view_feedback(request):
 			contest_name = _contest.id			
 			if user_type == "1":
 				_feedback = feedbacks.objects.filter(client=_user,contest=_contest)
+				_feedback_proposal = proposal_feedback.objects.filter(client_p=_user,proposal__contest = _contest ).order_by("-id")
 			elif user_type == "2":
 				_feedback = feedbacks.objects.filter(artist=_user,contest=_contest).order_by("-id")
+				_feedback_proposal = proposal_feedback.objects.filter(artist_p=_user,proposal__contest = _contest ).order_by("-id")
 			elif user_type == "3":
 				return HttpResponseRedirect('/admin/')
 			else:
@@ -49,8 +54,10 @@ def view_feedback(request):
 	else:
 		if user_type == "1":
 			_feedback = feedbacks.objects.filter(client=_user)
+			_feedback_proposal = proposal_feedback.objects.filter(client_p=_user).order_by("-id")
 		elif user_type == "2":
 			_feedback = feedbacks.objects.filter(artist=_user).order_by("-id")
+			_feedback_proposal = proposal_feedback.objects.filter(artist_p=_user).order_by("-id")
 		elif user_type == "3":
 			return HttpResponseRedirect('/admin/')
 		else:
@@ -61,7 +68,7 @@ def view_feedback(request):
 		_contest = myContest
 	else:
 		_contest = contest.objects.filter(user=request.user)
-	ctx = {'fdb':_feedback,'contests':_contest,'idCon':idContest}
+	ctx = {'fdb':_feedback,'contests':_contest,'idCon':idContest,'feedback_proposal':_feedback_proposal}
 	return render_to_response('feedback/feedback.html',ctx,context_instance=RequestContext(request))
 
 

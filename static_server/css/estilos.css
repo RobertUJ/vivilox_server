@@ -574,7 +574,7 @@ a.more-red {
 	font-weight:900;
 	text-transform: uppercase;
 	font-size: 14px;
-	padding: 10px 25px;
+	padding: 10px 15px;
 	float: right;
 }
 
@@ -585,7 +585,7 @@ a.more-rated {
 	font-weight:900;
 	text-transform: uppercase;
 	font-size: 14px;
-	padding: 10px 25px;
+	padding: 10px 15px;
 	float: right;
 	margin-right: 20px;
 }
@@ -2191,3 +2191,95 @@ ul.errorlist {
 	margin-left: 12px;
 	margin-bottom: 12px;
 }
+
+.ic_container{
+    vertical-align:baseline;
+    position:relative;
+ }
+.overlay{
+    opacity:0.5;
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+}
+.ic_caption{
+    position:absolute;    
+    opacity:0.6;   
+    overflow:hidden;
+    margin:0px;
+    padding:0px;
+    left:0px;
+    right:0px;
+    cursor:default;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=60);
+}
+.ic_category{
+    text-transform:uppercase;
+    font-size:9px;
+    letter-spacing:0px;
+    padding:5px;
+    margin:0px;
+}
+.ic_caption h5{
+    padding:0px 3px 3px 3px;
+    margin:0px;
+    font-size:10px;
+    line-height: 10px;
+}
+.ic_text{
+    padding:2px;
+    margin:0px;
+    text-align:left;
+    font-size:8px;
+}
+
+div.wrapper_thumb{
+	position:relative; 
+	overflow: hidden;
+}
+div.description_thumb{
+	position:absolute; 
+	bottom:0px; 
+	/*left:100px;*/
+	top:75px;
+	display:none; 
+	background-color:black;
+	color:white;
+}
+div.description_content_thumb{
+	padding:3px;
+	line-height: 15px;
+}
+div.description_content_thumb p{
+	font-size: 9px;
+	font-weight: normal;
+	opacity: 1;
+	text-align: left;
+}
+div.description_content_thumb span.cat{
+	text-transform: uppercase;
+	font-size: 10px;
+	letter-spacing: 2px;
+	color:#fafafa;
+	margin-bottom: 4px;
+	opacity: 1;
+
+}
+div.description_content_thumb span.title{
+	font-size: 10px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	color:#fafafa;
+	text-shadow: 1px 1px 1px #000;
+	margin-bottom: 4px;
+	opacity: 1;
+}
+.lib_acept,.download-prod h5{
+	font-size: 10px;
+}
+
+ul.tabs { margin: 0; padding: 0; float: left; list-style: none; height: 32px; border-bottom: 1px solid #999; border-left: 1px solid #999; width: 100%; } ul.tabs li { float: left; margin: 0; padding: 0; height: 31px; line-height: 31px; border: 1px solid #999; border-left: none; margin-bottom: -1px; overflow: hidden; position: relative; background: #e0e0e0; } ul.tabs li a { text-decoration: none; color: #000; display: block; font-size: 1.2em; padding: 0 20px; border: 1px solid #fff; outline: none; } ul.tabs li a:hover { background: #ccc; } html ul.tabs li.active, html ul.tabs li.active a:hover { background: #fff; border-bottom: 1px solid #fff; }
+.tab_container { border: 1px solid #999; border-top: none; overflow: hidden; clear: both; float: left; width: 100%; background: #fff; } .tab_content { padding: 20px; font-size: 1.2em; }

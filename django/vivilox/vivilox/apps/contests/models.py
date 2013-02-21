@@ -37,7 +37,7 @@ class cost(models.Model):
 	category 	=   models.ForeignKey(category)
 	status 		=	models.BooleanField(default=True)	
 	def __unicode__(self):
-		return "$ %2f USD"% (self.cost)
+		return "%2f"% (self.cost)
 
 class duration(models.Model):
 	duration 	= models.IntegerField(help_text='Insert number of days')

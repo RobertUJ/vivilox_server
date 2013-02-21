@@ -40,16 +40,14 @@ def isArtist(fn):
 
 # ----------------------------------------------------------------------
 
-
-def store(request):
+def store_top(request):
 	if request.method == "POST":
 		idCategory = int(request.POST['category'])
-		print idCategory
-
+	
 		if idCategory == 0:
-		 	_items	= item.objects.all().annotate(sold = Count('purchases')).order_by('-id')
+		 	_items	= item.objects.filter(top_rated=True).annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
 		else:
-		 	_items	= item.objects.filter(category = idCategory).annotate(sold = Count('purchases')).order_by('-id')
+		 	_items	= item.objects.filter(top_rated=True,category = idCategory).annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
 		
 		paginator = Paginator(_items,12)
 		
@@ -71,7 +69,60 @@ def store(request):
 		ctx = {'objItems':_items, 'objCategory':_category,'idCat':idCategory}
 		return render_to_response('store/store.html',ctx,context_instance=RequestContext(request))
 	else:
-		_items 	= item.objects.all().annotate(sold = Count('purchases')).order_by('-id')
+		_items 	= item.objects.filter(top_rated=True).annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
+		paginator = Paginator(_items,12)
+		
+		try:
+			page = request.GET.get('page')
+		except ValueError:
+			page = 1
+		
+		try:
+			_items = paginator.page(page)
+		except PageNotAnInteger, e:
+			# If page is not an integer, deliver first page.
+			_items = paginator.page(1)
+		except EmptyPage:
+			# If page is out of range (e.g. 9999), deliver last page of results.
+			_items = paginator.page(paginator.num_pages)
+
+		idCategory = 0	
+		_category 	= category.objects.all()
+		ctx = {'objItems':_items, 'objCategory':_category,'idCat':idCategory}
+		return render_to_response('store/store.html',ctx,context_instance=RequestContext(request))
+
+
+
+def store(request):
+	if request.method == "POST":
+		idCategory = int(request.POST['category'])
+	
+		if idCategory == 0:
+		 	_items	= item.objects.all().annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
+		else:
+		 	_items	= item.objects.filter(category = idCategory).annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
+		
+		paginator = Paginator(_items,12)
+		
+		try:
+			page = request.GET.get('page')
+		except ValueError:
+			page = 1
+		
+		try:
+			_items = paginator.page(page)
+		except PageNotAnInteger, e:
+			# If page is not an integer, deliver first page.
+			_items = paginator.page(1)
+		except EmptyPage:
+			# If page is out of range (e.g. 9999), deliver last page of results.
+			_items = paginator.page(paginator.num_pages)
+		
+		_category 	= category.objects.all()
+		ctx = {'objItems':_items, 'objCategory':_category,'idCat':idCategory}
+		return render_to_response('store/store.html',ctx,context_instance=RequestContext(request))
+	else:
+		_items 	= item.objects.all().annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
 		paginator = Paginator(_items,12)
 		
 		try:

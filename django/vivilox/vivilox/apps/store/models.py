@@ -18,6 +18,7 @@ class item(models.Model):
 	price			= models.FloatField()
 	top_rated   	= models.BooleanField(default=False)
 	license   		= models.BooleanField(default=False)
+	date_time		= models.DateTimeField(auto_now_add=True)
 	user 			= models.ForeignKey(User)
 
 	def __unicode__(self):

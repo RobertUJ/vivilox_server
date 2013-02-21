@@ -74,12 +74,21 @@
                         <div class="project-thumb-img">
                         {% for contest in objContest %}
                             <div class="span2">
-                            <a href="{% url contest_details_view contest.id  %}" class="thumb-link-home">
-                                {% thumbnail contest.logo "140x110" crop="50% center" as im %}
-                                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{contest.name}}">
-                                {% endthumbnail %}
-                            </a>
-                            <span class="_tooltip" rel="tooltip" data-placement="top" data-original-title="{{ contest.name }}" title="{{ contest.name }}">{{ contest.name|truncatewords:2 }}</span>
+                             {% thumbnail contest.logo "140x110" crop="50% center" as im %}
+                                <a href="{% url contest_details_view contest.id  %}">
+                                <div class="wrapper_thumb" style="width:{{im.width}}; height:{{im.height}};" >
+                                    <img class="img_thumb" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{contest.name}}" />
+                                    <div class="description_thumb" style="width:{{im.width}}; height:{{im.height}};" >
+                                        <div class="description_content_thumb">
+                                            <p>
+                                            <span class="cat">{{contest.category}}</span><br>
+                                            <span class="title">{{contest.name}}</span><br>
+                                            {{contest.description|truncatewords:5}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                </a>
+                            {% endthumbnail %}
                             <a class="view-project" href="{% url contest_details_view contest.id  %}">view details</a>
                             </div>
                         {%empty%}
@@ -94,20 +103,28 @@
                         <div class="project-thumb-img">
                         {% for item in objStore %}
                             <div class="span2">
-                            <a href="{% url image_details_view item.id  %}" class="thumb-link-home">
-                                {% thumbnail item.image_sample "140x110" crop="50% center" as im %}
-                                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{item.name}}">
-                                {% endthumbnail %}
-                            </a>
-                            <span class="_tooltip" rel="tooltip" data-placement="top" data-original-title="{{ item.title }}" title="{{ item.title }}">{{ item.title|truncatewords:3 }}</span>
+                            {% thumbnail item.image_sample "140x110" crop="50% center" as im %}
+                                <div class="wrapper_thumb" style="width:{{im.width}}; height:{{im.height}};" >
+                                    <img class="img_thumb" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{contest.name}}" />
+                                    <div class="description_thumb" style="width:{{im.width}}; height:{{im.height}};" >
+                                        <div class="description_content_thumb">
+                                            <p>
+                                            <span class="cat">{{item.category}}</span><br>
+                                            <span class="title">{{item.title}}</span><br>
+                                            {{item.description|truncatewords:5}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endthumbnail %}
+                   
                             <a class="view-project" href="{% url image_details_view item.id  %}">view details</a>
                             </div>
                         {%empty%}
                            <h3>No Items</h3>
                         {%endfor%}
                         </div>
-                        <a class="more-red" href="{% url all_contest_view %}">View All Projects</a> 
-                        <a class="more-rated" href="{% url top_contest_view %}">View All Top Rated Proyects</a>
+                        <a class="more-red" href="{% url store_view %}">View Store</a> 
+                        <a class="more-rated" href="{% url store_top_view %}">Top Rated Art</a>
                     </div>
                         
                 </div><!--End Row--> 
@@ -133,11 +150,42 @@
 <script>
     function inicio()
     {
-        $("._tooltip").tooltip();
-        $("#video_").on("click",viewVideo);
         $('#slider').nivoSlider();
-    }
+        $("#video_").on("click",viewVideo);
 
+        // description img
+        $('div.description_thumb').each(function(){
+            var div = $(this);
+            div.parent().css('width', $(this).siblings('img').width());
+            div.css('opacity', 0.6).css('width', $(this).siblings('img').width()).css('display', 'block');
+        });
+
+        $(".wrapper_thumb").on({
+            mouseenter:show_desc,
+            mouseleave:hide_desc
+        });
+    }
+    function show_desc(){
+        $(this).children('.description_thumb').stop()
+        .animate({
+            opacity:0.9,
+            top:35
+        },400);
+        $(this).children('img').stop().animate({
+            opacity:0.7
+        },400); 
+    }
+    function hide_desc(){
+        $(this).children('.description_thumb').stop()
+        .animate({
+            top:75,
+            opacity:0.6
+        },400); 
+
+        $(this).children('img').stop().animate({
+            opacity:1
+        },400); 
+    }
     function viewVideo()
     {
         var videoTxt = "<iframe width='853' height='480' src='http://www.youtube.com/embed/b4I5Lnn8BIc?rel=0' frameborder='0' allowfullscreen></iframe>";
@@ -145,6 +193,7 @@
         modalVideo.find(".modal-body").html(videoTxt);
         modalVideo.modal('show');
     }
+
     $(document).on("ready",inicio);
 </script>
 {% endblock footer_extrajs %}
