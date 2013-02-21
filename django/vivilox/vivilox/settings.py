@@ -50,7 +50,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT =  '/var/www2/vivilox--server/static_server/media/'
+MEDIA_ROOT =  '/var/www2/vivilox-server/static_server/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -61,7 +61,7 @@ MEDIA_URL = 'http://localhost:8000/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/var/www2/vivilox--server/static_server/'
+STATIC_ROOT = '/var/www2/vivilox-server/static_server/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -74,7 +74,7 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     # os.path.join(PATH_PROJECT,'static'),
     '/home/vivilox/webapps/static_server/static/', 
-    '/var/www2/vivilox--server/static_server/static/',	
+    '/var/www2/vivilox-server/static_server/static/',	
 )
 
 # List of finder classes that know how to find static files in
@@ -116,7 +116,7 @@ ROOT_URLCONF = 'vivilox.urls'
 WSGI_APPLICATION = 'vivilox.wsgi.application'
 
 TEMPLATE_DIRS = (
-    '/var/www2/vivilox--server/vivilox/vivilox/templates',
+    '/var/www2/vivilox-server/django/vivilox/vivilox/templates',
     '/home/vivilox/webapps/django/vivilox/vivilox/templates',
     #os.path.join(os.path.dirname(__file__),'templates'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".

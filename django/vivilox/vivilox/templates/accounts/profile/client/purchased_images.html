@@ -31,7 +31,8 @@
                 <ul id="profile_menu">
                     <li><a class="submissions item_menu " href="{% url profile_contest %}">My Contest</a></li>
                     <li><a class="purchased item_menu active_link" href=" {% url purchased_images_view %} ">Purchased Images</a></li>
-                    <li><a class="notifications " href="{% url feedback_view %}">Notifications</a></li>
+                    <li><a class="notifications " href="{% url feedback_view %}">Private messages
+</a></li>
                 </ul>
             </div>
         </div><!--Span3 ENd-->
@@ -51,14 +52,64 @@
                             <span>Date purchase: {{ p.date|date:"M d, Y" }} </span>
                         </div>
                         <div class="download-prod">
-                            <a class="download-files" href="#">Download</a>
+                            {% if p.paid %}
+                                 <a class="download-files" href="{% url download_expedient_view p.item.id %}">Download</a>
+                                {% if p.released %}
+                                    <h5>You have release funds for this image</h5>
+                                {% else %}
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="submit_liberate" class="submit_liberate"> <span class="lib_acept">Agree that the purchased images are OK</span>
+                                        </label>
+                                        <a class="download-files" href="{% url liberate_item_view p.item.id %}" title="">Liberate</a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% else %}
+                                <a class="pay-now" href="{% url pay_item_view p.item.id %}" title="">Pay Now</a>
+                            {% endif %}
                         </div>
                     </div>
                 {% empty %}
-                    <h3>No purchased items</h3>
+                    <h4>You have no purchases. Check out the <a href=" {% url store_view %} ">VIVILOX Concept Art Store!</a>  </h4>
                 {% endfor %}
             </div>
-	</div>
+            <div class="pagination">
+                <span class="step-links">
+                    <ul>
+                    {% for pag in purchased.paginator.page_range %}
+                        <li>
+                            <a href="?page={{pag}}">{{pag}}</a>
+
+                        </li>   
+                    {% endfor %}
+                    </ul>
+                </span>
+            </div>
+
+    </div>
 </div>
 {% endblock %}
+{% block footer_extrajs %}
+<script>
+function liberate_item(e){
+   var btnItem = $(this);
+   var cont = btnItem.parent(".controls");
+   var iCheck = cont.find(".submit_liberate");
+
+   if (! iCheck.is(":checked")){
+    e.preventDefault();
+    alert("Please, accept the message.");
+   }
+}
+function inicio(){
+    $(".download-files").on("click",liberate_item);
+}    
+
+$(document).on("ready",inicio);
+    
+</script>
+    
+{% endblock footer_extrajs %}
 

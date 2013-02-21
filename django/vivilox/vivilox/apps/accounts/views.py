@@ -96,13 +96,13 @@ def images_purchased(request):
 
 	ctx = {"purchased":_itemPurchesed,"profile":request.user.profile} 
 	user_type = request.user.profile.user_type
-	# if user_type 	== "1":
-	# 	template = "accounts/profile/client/purchased_images.html"
-	# elif user_type 	== "2":
-	# 	template = "accounts/profile/artist/purchased_images.html"
-	# else:
-	# 	return HttpResponseRedirect("/")
-	template = "accounts/profile/artist/purchased_images.html"
+	if user_type 	== "1":
+		template = "accounts/profile/client/purchased_images.html"
+	elif user_type 	== "2":
+		template = "accounts/profile/artist/purchased_images.html"
+	else:
+		return HttpResponseRedirect("/")
+	# template = "accounts/profile/artist/purchased_images.html"
 
 	return render_to_response(template,ctx,context_instance=RequestContext(request))
 

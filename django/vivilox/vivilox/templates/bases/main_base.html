@@ -112,7 +112,10 @@
         </div> <!--End Span3-->    
          <div class="span3 footer-mod">
             <h4 class="fb">Facebook</h4>
-                <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fpages%2FVIVILOXcom%2F366030400153958&amp;width=220&amp;height=558&amp;show_faces=true&amp;colorscheme=light&amp;stream=true&amp;border_color=%23393942&amp;header=false&amp;appId=123366741102352" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:220px; height:558px;" allowTransparency="true"></iframe>
+             <div id="fb-root"></div>
+                
+                <iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fpages%2FVIVILOXcom%2F366030400153958%3Ffref%3Dts&amp;width=200&amp;height=290&amp;show_faces=true&amp;colorscheme=dark&amp;stream=false&amp;border_color&amp;header=true&amp;appId=123366741102352" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:290px;" allowTransparency="true"></iframe>
+            
             <div id="icons">
 
             <h4>Follow Us</h4>
@@ -153,10 +156,8 @@
         <input id="id_cat_input" type="hidden" value="1" name="id_cat">
     </form>
 </div>
-
-
 {% block footer_js %}
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="{{STATIC_URL}}js/bootstrap.min.js"></script>
 
     <script>

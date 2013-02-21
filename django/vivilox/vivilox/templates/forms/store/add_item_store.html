@@ -5,8 +5,10 @@
 {% block content %}
 <div class="container">
     <!--  Project Proposals  -->
-    <div class="row">
-    <div class="span12"><h3 class='up_item'>Step1: Art information</h3></div>
+    <div class="row steps-str">
+        <div class="span4 step1"><h3 class='up_item'><span>Step1: Art information</span></h3></div>
+        <div class="span4 step2"><h4 class=''><span>Step2: Upload Original Work</span></h4></div>
+        <div class="span4 step3"><h4 class=''><span>Step 3: Review and submit.</span></h4></div>
     </div>
     <div class="row">
     <div class="span12">
@@ -29,6 +31,7 @@
               <legend>Art information</legend>
           </fieldset>  
           {{objForm.as_p}}
+          <p><a type-text="top" class="modal_show_text"  href="#" title="{{objTextTop.text}}">What is Top rated?</a>  | <a class="modal_show_text" type-text="license" href="#" title="{{objTextLicense.text}}">What is License?</a></p>
         <p>
             {% if msg == "" %}
                 <input type="submit" name="addItem" value="Update" class="edit">
@@ -42,7 +45,57 @@
     
 </div><!--End Container-->
 
+ 
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+
 {% endblock content %}
 
+{% block footer_extrajs %}
+<script type="text/javascript">
+function show_modal(e){
+    e.preventDefault();
 
+    var _top = "{{objTextTop.text}}"; 
+    var _license = "{{objTextTop.text}}"; 
+    var _topTitle = "Top Rated"; 
+    var _licenseTitle = "License";
+    var type = $(this).attr("type-text");
+    var _title = "";
+    var _body = "";
+
+    if (type == "top"){
+        _title = _topTitle;
+        _body = _top;
+    }else{
+        _title = _licenseTitle;
+        _body = _license;
+    }
+
+    $("#myModalLabel").text(_title);
+    $(".modal-body").text(_body)
+    $('#myModal').modal('show');
+}
+
+function inicio(){
+    $(".modal_show_text").on("click",show_modal);
+}
+
+$(document).on("ready",inicio);
+
+</script>
+    
+{% endblock footer_extrajs %}
 

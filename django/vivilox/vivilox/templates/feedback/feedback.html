@@ -40,12 +40,12 @@
                     {% if user.profile.user_type == "2" %}
                         <li><a class="store item_menu" href="{% url my_store_view %}">My Store</a></li>                        
                         <li><a class="submissions item_menu " href="{% url profile_contest %}">My Submissions</a></li>
-                        <li><a class="notifications item_menu active_link" href="{% url feedback_view %}">Notifications</a></li>  
+                        <li><a class="notifications item_menu active_link" href="{% url feedback_view %}">Private messages</a></li>  
                         <li><a class="purchased item_menu " href="{% url purchased_images_view %}">Purchased Images</a></li>                </ul>
                     {% else %}
                         <li><a class="submissions item_menu" href=" {% url profile_contest %}">My Contest</a></li>
                         <li><a class="purchased item_menu" href="{% url purchased_images_view %}">Purchased Images</a></li>
-                        <li><a class="notifications item_menu active_link" href="">Notifications</a></li>
+                        <li><a class="notifications item_menu active_link" href="">Private messages</a></li>
                     {% endif %}
                    
                 </ul>
@@ -65,6 +65,13 @@
         		</form>
         	</div>
             <!-- ** my_notifications ** -->
+            <ul class="tabs"> 
+                <li><a href="#tab1">Contest</a></li> 
+                <li><a href="#tab2">Proposals</a></li> 
+            </ul> 
+            <div class="tab_container"> 
+            
+            <div id="tab1" class="tab_content"> <!--Content--> 
             <div style="" class="cont_info_profile" id="my_notifications">
                 {% for f in fdb %}
                     {% if f.sender.profile.image %}    
@@ -105,6 +112,38 @@
                     <h1>No notifications</h1> 
                 {% endfor %}
             </div>
+            </div> 
+                <div id="tab2" class="tab_content"> <!--Content--> 
+                <div style="" class="cont_info_profile" id="my_notifications">
+                {% for f in feedback_proposal %}
+                    {% if f.sender.profile.image %}    
+                        {% thumbnail f.sender.profile.image "50x50" crop="50% center" as im %}
+                            {% if f.sender.id == user.id %}
+                                <img class="img_sender_perfil" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{user.get_full_name}}">
+                            {% else %}
+                                <img class="img_sender_otros" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{user.get_full_name}}">
+                            {% endif %}
+                        {% endthumbnail %} 
+                    {% else %}
+                        {% if f.sender.id == user.id %}
+                           <img class="img_sender_perfil" src="{{ MEDIA_URL }}accounts/profile/user-image.jpg" class="no_image_notification" >
+                        {% else %}
+                           <img class="img_sender_otros" src="{{ MEDIA_URL }}accounts/profile/user-image.jpg" class="no_image_notification" > 
+                        {% endif %}
+                    {% endif %}
+                    {% autoescape off %}
+                        <p>{{f.feedback}}</p>
+                    {% endautoescape %}
+                    <hr>
+                {% empty %}
+                    <h1>No notifications</h1> 
+                {% endfor %}
+            </div>
+
+
+
+                </div> 
+            </div>
 
     	</div><!--End span8-->
 	</div>
@@ -143,11 +182,29 @@ function view_form_reply(e)
     divReply.fadeIn();
     inputReply.focus(); 
 }
+$(document).ready(function() { 
+    
+});
 
+function tabs(){
+    $(".tab_content").hide(); 
+    $("ul.tabs li:first").addClass("active").show(); 
+    $(".tab_content:first").show(); 
+    $("ul.tabs li").on("click",click_tab);
+}
+function click_tab(){
+    $("ul.tabs li").removeClass("active"); 
+    $(this).addClass("active"); 
+    $(".tab_content").hide(); 
+    var activeTab = $(this).find("a").attr("href"); 
+    $(activeTab).fadeIn(); 
+    return false; 
+}
 function inicio()
 {
     activa_select();
     $(".not_reply").on("click",view_form_reply);
+    tabs();
 }
 $(document).on("ready",inicio);
 </script>

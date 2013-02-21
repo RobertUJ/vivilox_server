@@ -9,7 +9,7 @@ from django.forms import ModelChoiceField
 class add_item_store(forms.ModelForm):
 	class Meta:
 		model = item
-		exclude = ['user','license',]
+		exclude = ['user',]
 
 
 class frmExpedient(forms.ModelForm):

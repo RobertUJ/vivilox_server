@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 # Agregar Formulario
 from vivilox.apps.store.models import category, item, top_rated_cost, expedient_item, purchases,downloads
+from vivilox.apps.store.models import top_rated_text,license_text
 #Carga de formularios
 from vivilox.apps.store.forms import add_item_store,frmExpedient
 # Librerias o herramientas para proceso de informacion
@@ -39,15 +40,14 @@ def isArtist(fn):
 
 # ----------------------------------------------------------------------
 
-
-def store(request):
+def store_top(request):
 	if request.method == "POST":
 		idCategory = int(request.POST['category'])
-		
+	
 		if idCategory == 0:
-		 	_items	= item.objects.all().annotate(sold = Count('purchases')).order_by('-id')
+		 	_items	= item.objects.filter(top_rated=True).annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
 		else:
-		 	_items	= item.objects.filter(category = idCategory).annotate(sold = Count('purchases')).order_by('-id')
+		 	_items	= item.objects.filter(top_rated=True,category = idCategory).annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
 		
 		paginator = Paginator(_items,12)
 		
@@ -69,7 +69,60 @@ def store(request):
 		ctx = {'objItems':_items, 'objCategory':_category,'idCat':idCategory}
 		return render_to_response('store/store.html',ctx,context_instance=RequestContext(request))
 	else:
-		_items 	= item.objects.all().annotate(sold = Count('purchases')).order_by('-id')
+		_items 	= item.objects.filter(top_rated=True).annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
+		paginator = Paginator(_items,12)
+		
+		try:
+			page = request.GET.get('page')
+		except ValueError:
+			page = 1
+		
+		try:
+			_items = paginator.page(page)
+		except PageNotAnInteger, e:
+			# If page is not an integer, deliver first page.
+			_items = paginator.page(1)
+		except EmptyPage:
+			# If page is out of range (e.g. 9999), deliver last page of results.
+			_items = paginator.page(paginator.num_pages)
+
+		idCategory = 0	
+		_category 	= category.objects.all()
+		ctx = {'objItems':_items, 'objCategory':_category,'idCat':idCategory}
+		return render_to_response('store/store.html',ctx,context_instance=RequestContext(request))
+
+
+
+def store(request):
+	if request.method == "POST":
+		idCategory = int(request.POST['category'])
+	
+		if idCategory == 0:
+		 	_items	= item.objects.all().annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
+		else:
+		 	_items	= item.objects.filter(category = idCategory).annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
+		
+		paginator = Paginator(_items,12)
+		
+		try:
+			page = request.GET.get('page')
+		except ValueError:
+			page = 1
+		
+		try:
+			_items = paginator.page(page)
+		except PageNotAnInteger, e:
+			# If page is not an integer, deliver first page.
+			_items = paginator.page(1)
+		except EmptyPage:
+			# If page is out of range (e.g. 9999), deliver last page of results.
+			_items = paginator.page(paginator.num_pages)
+		
+		_category 	= category.objects.all()
+		ctx = {'objItems':_items, 'objCategory':_category,'idCat':idCategory}
+		return render_to_response('store/store.html',ctx,context_instance=RequestContext(request))
+	else:
+		_items 	= item.objects.all().annotate(sold = Count('purchases')).order_by('purchases', '-top_rated','-id')
 		paginator = Paginator(_items,12)
 		
 		try:
@@ -124,7 +177,12 @@ def add_item(request):
 			return HttpResponseRedirect("/store/expedient/new/")			
 	else:
 		frmItem = add_item_store()
-	ctx = {'objForm':frmItem}
+
+
+	_text_top_rated = top_rated_text.objects.all().order_by("-date")[0]
+	_license_text = license_text.objects.all().order_by("-date")[0]
+
+	ctx = {'objForm':frmItem,'objTextTop':_text_top_rated,'objTextLicense':_license_text}
 	return render_to_response('forms/store/add_item_store.html',ctx,context_instance=RequestContext(request))
 
 

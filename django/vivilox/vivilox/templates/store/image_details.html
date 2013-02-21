@@ -145,21 +145,21 @@ var src_original = "";
 function show_big_img(e)
 {
     var src_  = $(this).parent().next("span").attr("srcimgs");
-    $("#img_big")
+    $("#img_big").stop()
     .animate({
         opacity:0
-    },100,function(){
+    },50,function(){
         $(this).attr("src",src_);
     })
     .animate({
         opacity:1,
-    },800); 
+    },400); 
 
     // .attr("src",src_);
 }
 function show_feature_img()
 {
-    $("#img_big").attr("src",src_original);
+    $("#img_big").stop().attr("src",src_original);
 }
 function inicio()
 {

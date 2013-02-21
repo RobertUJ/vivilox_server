@@ -37,6 +37,9 @@
                         </span>
                      </div>
             </div>
+            
+
+                
             {% if objContest.finished %}
                 <div class="row">
                     <div class="span12">
@@ -47,6 +50,8 @@
                 </div>  
             {% endif %}
             
+
+
             <div class="row">
                 <div class="span5">
                     <h4>Contest launched by: <a href="{% url all_contest_buyer_view objContest.user.id %}">{{ objContest.user.first_name }} {{ objContest.user.last_name }}</h4></a>
@@ -58,7 +63,14 @@
                 {% if not objContest.finished %}
                     <div class="join-contest-btn offset5 span2"><a class="join-yellow" href="{% url add_new_proposal_form objContest.id  %}">Add Proposal</a></div>
                 {% endif %}
-            </div>      
+            </div>  
+             {% if objContest.user == user %}
+                <div class="row">
+                    <div class="span12">
+                        <a class="edit_contest" href=" {% url edit_contest_new_view objContest.id %} ">Edit Contest Info</a>
+                    </div>
+                </div>
+            {% endif %}    
             <!--  Project Full Details  -->
 
               <div class="project-details row">
@@ -169,7 +181,7 @@
                                     <p>    
                                         {% if user.profile.user_type == "1" and user == objContest.user and not objContest.finished %}
                                             {% if not proposal.discarded %}
-                                                <a class='feedback' href="{% url feedback_add user.id,proposal.user.id,objContest.id,proposal.id %}">Add FeedBack</a>
+                                                <a class='feedback' href="{% url feedback_add user.id,proposal.user.id,objContest.id,proposal.id %}">Contact Artist</a>
                                                 <a id="id_winner" class='winner' href="{% url winner_view user.id,proposal.user.id,objContest.id,proposal.id %}">Flag as Winner</a>
                                             {% endif %}
                                         {% endif %}
