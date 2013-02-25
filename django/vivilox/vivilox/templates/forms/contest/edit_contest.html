@@ -15,8 +15,8 @@
         </div>
     </div>
 	<div class="row">
-		<h3>Edit Contest Details</h3>
-		<hr>
+		<div class="span12"><h3>Edit Contest Details</h3></div>
+	</div>
 		<div class="span12"><h3>{{cat.name}} {{ request.session.cat }}</h3></div>
 		
 		<form id="frmContest" name="frmContest" method="POST" action="." enctype='multipart/form-data'>
@@ -171,8 +171,7 @@
 			
 		</form>
 
-    </div>
-</div><!--End Container-->
+    </div><!--End Container-->
 
 {% endblock content %}
 

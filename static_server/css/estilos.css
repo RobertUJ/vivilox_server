@@ -2,6 +2,8 @@
 
 /* @override http://vivilox.webfactional.com/static/css/estilos.css */
 
+/* @override http://vivilox.webfactional.com/static/css/estilos.css */
+
 /* @override http://192.168.0.117:9000/static/css/estilos.css */
 
 #logo a {
@@ -14,7 +16,7 @@
 	margin-right: 0;
 }
 
-p.home-p.span4 {
+p.home-p {
 	color: #676666;
 	padding-top: 5px;
 	padding-bottom: 5px;
@@ -22,7 +24,6 @@ p.home-p.span4 {
 	font-size: 14px;
 	font-family: 'Lato', sans-serif;
 	text-align: center;
-	margin-left: 34px;
 }
 
 div.title-form {
@@ -36,14 +37,9 @@ div.title-form h3 {
 	padding-right: 55px;
 }
 
-div.span2.footer-mod {
-/*	padding-left: 32px;
-	padding-right: 32px;
-*/}
 
 h3 {
-	/*padding-left: 20px;*/
-	font:'Lato', sans-serif;
+	font-sizeont:'Lato', sans-serif;
 	
 	
 }
@@ -60,18 +56,11 @@ div.row.color-box {
 	padding-bottom: 22px;
 }
 
-div.row{
-	margin-left: 0;
-	margin-right: 0;
-	width: 960px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
 div.container {
-	width: 980px;
-	overflow: hidden;
+	
 	background-color: #F7F7F7;
+	padding-left: 0;
+	padding-right: 0;
 }
 
 div#_proposal.proposals-grid.row {
@@ -89,8 +78,7 @@ div.video-home {
 	text-align: center;
 	top-align:center;
 	display: inline-block;
-      margin-left: 2px;
-       margin-right: 10px;
+     0
 	margin-top: 35px;
 	margin-bottom: 15px;
         
@@ -144,7 +132,7 @@ span.red {
 	text-transform: uppercase;
 }
 
-h1.home-h1.span8 {
+h1.home-h1 {
 	color: #676666;
 	margin: 0;
 	font-size: 32px;
@@ -176,6 +164,11 @@ div.form-form {
 	overflow: hidden;
 	background: url(/static/img/separator-h.png) no-repeat center top;
 	width: 100%;
+}
+
+#footner-menu li {
+	float: left;
+	padding-right: 15px;
 }
 
 ul.yellow-bullets li{
@@ -258,10 +251,10 @@ a.join-yellow {
 }
 
 ul.breadcrumb {
-	margin: 0;
+	margin: 0 0 0 10px;
 	padding: 0;
 	background-color: #38363f;
-	
+	float: left;
 }
 ul.breadcrumb li{
 	color: #fff;
@@ -272,15 +265,21 @@ ul.breadcrumb a{
 	text-shadow: none;
 }
 div#cont_breadcrumb.row {
-	background-color: #38363f;
+	
 	padding-top: 5px;
 	padding-bottom: 9px;
+	margin-top: 10px;
+}
+
+div#cont_breadcrumb.row div.span12 {
+	background-color: #38363f;
+	padding: 10px 0;
 }
 a.yellow:hover{
 	color: #fff;
 	text-decoration: none;
 	background-position: 57px -45px;
-}
+	}
 a.yellow {
 
 	background: url(/static/img/join-yellow-btn.png) no-repeat 57px 7px;
@@ -321,8 +320,9 @@ span.time-icon {
 	background: url(/static/img/icon-clock.png) no-repeat 0 center;
 	font-weight: bold;
 	font-size: 18px;
-	line-height: 11px;
-	padding: 5px 5px 5px 40px;
+	line-height: 19px;
+	padding: 5px 0 5px 36px;
+	display: block;
 }
 
 span.budget-icon {
@@ -423,6 +423,7 @@ h3.proposals-h3 {
 .store-products div.span3 {
 	line-height: 8px;
 	margin-bottom: 25px;
+	text-align: center;
 }
 button.edit:hover, input.edit:hover,
 a.edit:hover{
@@ -470,6 +471,8 @@ a.proposal-thumb-link {
 	border: 2px solid #575764;
 	margin-bottom: 9px;
 	width: 157px;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 #my_items div.storeimg.mini div a.proposal-thumb-link {
@@ -521,21 +524,21 @@ a.join-yellow:hover{
 
 }
 
-div#all_contest div.project-list.row div.row div.time-left.span3 h3 {
+div#all_contest div.project-list div.time-left.span3 h3 {
 	background-color: #f6f6f6;
 	font-size: 18px;
 	color: #383934;
 	padding-left: 0;
 }
 
-div#all_contest div.project-list.row div.row div.budget.span2 h3 {
+div#all_contest div.project-list div.budget.span2 h3 {
 	background-color: #f6f6f6;
 	font-size: 18px;
 	color: #a1bd59;
 	padding-left: 0;
 }
 
-div#all_contest div.project-list.row div.row div.span2 h3 {
+div#all_contest div.project-list div.span2 h3 {
 	background-color: #f6f6f6;
 	font-size: 18px;
 	color: #383934;
@@ -604,18 +607,10 @@ input.red2{
 
 div.form-actions {
 	overflow: hidden;
-	width: 100%;
 	text-align: center;
 	height: 34px;
 }
 
-#frmContest div.control-group div.controls {
-	float: left;
-}
-
-#frmContest {
-	float: left;
-}
 
 #frmContest div.control-group {
 	overflow: hidden;
@@ -623,7 +618,6 @@ div.form-actions {
 }
 
 #frmContest div.cont_cost.span4 {
-	width: 274px;
 	margin-left: 0;
 	margin-right: 15px;
 }
@@ -782,14 +776,16 @@ form {
 
 header {
 	padding-right: 5px;
-	width: 980px;
 	background-color: #fff;
+	width: 960px;
+	position: relative;
+	right: 10px;
 }
 
 div#top-header.row {
 	height: 115px;
-	background-color: #fff;
 	border-bottom: 5px solid #38363f;
+	margin-left: 0;
 }
 
 
@@ -829,8 +825,8 @@ div#top-header.row {
 }
 
 div#user-login.span4 {
-	margin-top: 10px;
 	float: right;
+	margin-top: 10px;
 }
 
 h3.sold_mark {
@@ -856,9 +852,9 @@ footer {
 		color: #fff;
 	position: relative;
 	margin-top: 30px;
-	padding-right: 5px;
-	width: 980px;
 	background-color: #393942;
+	width: 950px;
+	left: 5px;
 }
 footer .row{
 	background-color: #393942;
@@ -942,11 +938,6 @@ footer h4 {
 	color: #fff;
 	font-family: 'Lato', sans-serif;
 	font-weight:900
-}
-
-div.span3.footer-mod {
-	width: 200px;
-	margin-left: 33px;
 }
 
 h4.tweet {
@@ -1380,7 +1371,7 @@ div.project-desc p{
 	margin-top: 9px;
 }
 
-div.row.border-top {
+div.border-top {
 	margin-top: 15px;
 	padding-top: 15px;
 	border-top: 1px solid silver;
@@ -1654,6 +1645,7 @@ div.span3.user {
 	border: 1px solid #e3e3e3;
 	padding: 0;
 	background-color: #fff;
+
 }
 
 a.contact {
@@ -1678,6 +1670,11 @@ div.row.steps-str div.span4 {
 	width: 325px;
 	left: 36px;
 }
+
+div.span6.add-contest {
+	margin-bottom: 15px;
+	margin-top: 15px;
+}
 a.edit_contest:hover{
 	background-color: #000;
 	text-decoration:none;
@@ -1686,6 +1683,8 @@ a.edit_contest {
 	background: #393942 url(/static/img/icon-edit.png) no-repeat 9px center;
 	padding: 10px 20px 10px 40px;
 	color: #fff;
+	margin-top: 15px;
+	float: left;
 }
 
 div.span4.step1 {
@@ -2132,24 +2131,22 @@ div.time-left.span3 {
 	text-align: center;
 }
 
-#all_contest div.project-list.row div.row div.budget.span2 {
+#all_contest div.project-list div.budget.span2 {
 	text-align: center;
         color: #a1bd59;
 }
 
-#all_contest div.project-list.row div.row div.span2 {
+#all_contest div.project-list div.span2 {
 	text-align: center;
 	margin-left: 10px;
 }
 
 div#logo.span3 {
-	margin-left: 10px;
 	margin-top: 10px;
 	margin-right: 0;
 }
 
 div#top-menu.span5 {
-	margin-left: 0;
 	margin-top: 6px;
 }
 
@@ -2157,6 +2154,8 @@ div#shadow.container {
  -moz-box-shadow: 0px 0px 60px #000000;
     -webkit-box-shadow: 0px 0px 60px #000000;
     box-shadow: 0px 0px 60px #000000;
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
 #form_div{
@@ -2165,8 +2164,12 @@ div#shadow.container {
 .srcimg{
 	display: none;
 }
+
+#expedient_items div.cont_thumb a img.imgThumb {
+		cursor:pointer;	
+}
 .cont_thumb{
-	display: inline-block;;
+	display: inline-block;
 }
 .imgThumb{
 	cursor: move;
