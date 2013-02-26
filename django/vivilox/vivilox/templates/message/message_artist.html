@@ -1,0 +1,21 @@
+{% extends 'bases/main_base.html' %}
+
+{% block title %} Message for {{user.name}} {% endblock %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+        	<!--  Project Full Details  -->
+              <h3>{{title}}</h3>
+               <div class="border-top span12">
+                    <p>
+                      {% autoescape off %}
+                        {{message}}
+                      {% endautoescape %}
+                    	
+                    </p>
+                    <p>Return to <a href="{% url main_view %}" title="">Home</a></p>
+                </div>
+    </div>
+</div>
+{% endblock content %}
