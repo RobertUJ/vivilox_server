@@ -25,26 +25,22 @@ from django.core.mail import EmailMultiAlternatives # Para enviar HTML
 
 # Decorators
 def isClient(fn=None):
-	def wrapper(request,*args, **kr):
+	def wrapper(request):
 		if request.user.profile.user_type != "1":
-			# if msg:
-			# 	_msg = msg
-			# else:
-			# 	_msg = "Sorry, you not have permissions for do this action."
-			_msg= "Sorry, you not have permissions for do this action."
+			_msg = "Sorry, you not have permissions for do this action."
 			ctx ={'message':_msg}
 			return render_to_response('message/message.html',ctx,context_instance=RequestContext(request))
 		else:
-			return fn(request, *args, **kr)
+			return fn(request)
 	return wrapper
 
 def isArtist(fn=None):
-	def wrapper(request, *args, **kr):
+	def wrapper(request):
 		if request.user.profile.user_type != "2":
 			ctx ={'message':"Sorry, you not have permissions for do this action."}
 			return render_to_response('message/message.html',ctx,context_instance=RequestContext(request))
 		else:
-			return fn(request, *args, **kr)
+			return fn(request)
 	return wrapper
 
 
@@ -52,7 +48,10 @@ def isArtist(fn=None):
 @login_required
 def new_contest(request):
 	if request.user.profile.user_type != "1":
-			_msg = "Sorry, you not have permissions for do this action."
+			_msg = """  Sorry, you must be logged in as a client in order to create a contest.
+						You can still purchase art from the STORE
+						Return to Home Page"""
+
 			ctx ={'message':_msg}
 			return render_to_response('message/message.html',ctx,context_instance=RequestContext(request))
 	if request.method == "POST":
