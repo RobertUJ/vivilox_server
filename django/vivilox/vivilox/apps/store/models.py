@@ -10,17 +10,16 @@ class category(models.Model):
 		return self.name
 
 class item(models.Model):
-	title 			= models.CharField(max_length=50)
-	category 		= models.ForeignKey(category)
-	description 	= models.TextField()
-	image_sample	= models.ImageField(upload_to='store/images_samples')
-	tags 			= models.CharField(max_length=255,help_text='Separated by commas')
-	price			= models.FloatField()
-	top_rated   	= models.BooleanField(default=False)
-	license   		= models.BooleanField(default=False)
+	title 			= models.CharField(max_length=50,verbose_name="Title")
+	category 		= models.ForeignKey(category,verbose_name="Category")
+	description 	= models.TextField(verbose_name="Description")
+	image_sample	= models.ImageField(upload_to='store/images_samples',verbose_name="Thubnail preview (upload a low resolution thumbnail of your artwork)",help_text="")
+	tags 			= models.CharField(max_length=255,help_text='Separated by commas',verbose_name="Tags")
+	price			= models.FloatField(verbose_name="Price")
+	top_rated   	= models.BooleanField(default=False,verbose_name="Top Rated",help_text="(Top rated pieces appear in the top rated section to attarct more buyers)")
+	license   		= models.BooleanField(default=False,verbose_name="License")
 	date_time		= models.DateTimeField(auto_now_add=True)
-	user 			= models.ForeignKey(User)
-
+	user 			= models.ForeignKey(User,verbose_name="")
 	def __unicode__(self):
 		return self.title
 

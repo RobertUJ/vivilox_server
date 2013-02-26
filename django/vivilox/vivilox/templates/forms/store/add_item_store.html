@@ -12,6 +12,12 @@
     </div>
     <div class="row">
     <div class="span12">
+        <p>
+        Upload a New Art Piece to the Store. 
+        <br>
+        (NOTE: If you have multiple pieces as part of one package 
+        (e.g. a cast of 4 characters) you will be able to upload them all at the same time on the next page).
+        </p>
         <form action="." method="POST" id="IdfrmAddItem" name="frmAddItem" class="form-horizontal" enctype='multipart/form-data'>
         {% csrf_token %}
         
@@ -36,7 +42,7 @@
             {% if msg == "" %}
                 <input type="submit" name="addItem" value="Update" class="edit">
             {% else %}
-                <input type="submit" name="addItem" value="Submit my Work" class="edit">
+                <input type="submit" name="addItem" value="Next" class="edit">
             {% endif %}            
         </p>
         </form>

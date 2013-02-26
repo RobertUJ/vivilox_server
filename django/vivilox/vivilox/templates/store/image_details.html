@@ -28,19 +28,13 @@
             <h3 class="title_price">Price</h3>
             <span class="budget-icon">${{item.price|floatformat:2}}</span>
         </div>
-        <div class="span2">
+        <div class="span4">
             <h3>Artist</h3>
             <span class="item_artist"> {{item.user.get_full_name}} </span>
         </div>
 
-        <div class="span2">
-            {% if purchases %}
-                {# <h3 class="sold_mark">Sold</h3>  #}
-            {% endif %}
-        </div>
 
         <div class=" span2">
-           
             {% if not item.user == user and not purchases %}
                 <form action="{% url item_purchase_view %}" method="POST" accept-charset="utf-8">
                     {% csrf_token %}

@@ -53,7 +53,7 @@ class duration(models.Model):
 
 class contest(models.Model):
 	user 	 	= models.ForeignKey(User)
-	name 		= models.CharField(max_length=200,unique=True)
+	name 		= models.CharField(max_length=200,unique=True,verbose_name="Contest Title")
 	category 	= models.ForeignKey(category)
 	industry	= models.ForeignKey(industry,blank=True,null=True)
 	description	= models.TextField()

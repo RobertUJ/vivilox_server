@@ -12,6 +12,8 @@
     </div>
     <div class="row">
         <div class="span6">
+            <br>
+            Upload your High Resolution File(s)
             <form action="." method="POST" id="frmExpedient" name="frmExpedient" class="form-horizontal" enctype='multipart/form-data'>
             {% csrf_token %}
             <div id="images">
@@ -20,13 +22,16 @@
             <input type='file' name='image' >
             </p>
             </div>
+            <p>If you want to sell multiple pieces as part of this package please click button Add More images Here</p>
             <p>
-                <button id="add_another" title="Add Image" class="edit"> Add another image</button>
+
+                <button id="add_another" title="Add Image" class="edit"> Add More images Here</button>
                 <input class="edit" type="submit" name="addItem" value="Submit my Work">
             </p>
             </form>
         </div>
         <div class="span6">
+            <br>
             <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
         </div>
     </div>
@@ -47,10 +52,16 @@ $(document).on("ready",function(){
         num = num + 1;
         name = "image_" + num.toString();
         console.log(name); 
-        $("#images").append("<p><input class='img' type='file' name='image' ></p>");
+        $("#images").append("<div class='new_img'> <p><input class='img' type='file' name='image' ></p><a class='del' href='#'>del</a></div>");
     });
+
+    $("#images").on("click",".new_img .del",delete_input);
 });
 
+function delete_input(){
+    var parent = $(this).parent();
+    parent.remove();
+}
 
 </script>
 

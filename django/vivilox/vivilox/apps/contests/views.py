@@ -204,8 +204,13 @@ def flagWinner(request,idclient,idartist,idcontest,idproposal):
 
 
 @login_required
-@isClient
 def  get_categories(request):
+	if request.user.profile.user_type != "1":
+			_msg = """<h5>Sorry, you must be logged in as a client in order to create a contest.<br>
+					You can still purchase art from the <a href='/store/'>STORE</a><br/>
+					Return to <a href='/'>Home Page</a></h5>"""
+			ctx ={'message':_msg}
+			return render_to_response('message/message_client.html',ctx,context_instance=RequestContext(request))
 	if request.method == "POST":
 		if request.is_ajax():
 			idCat = request.POST['idcat']	

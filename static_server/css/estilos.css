@@ -1,3 +1,7 @@
+/* @override http://192.168.0.123:8000/static/css/estilos.css */
+
+/* @override http://192.168.0.123:8000/static/css/estilos.css */
+
 /* @override http://vivilox.webfactional.com/static/css/estilos.css */
 
 /* @override http://vivilox.webfactional.com/static/css/estilos.css */
@@ -1221,7 +1225,7 @@ div.cont_desc_cont {
 }
 
 a.cont-shopping5 {
-	display: block;
+	display: inline-block;
 	text-align: center;
 	color: #fff;
 	padding-bottom: 12px;
@@ -2286,3 +2290,49 @@ div.description_content_thumb span.title{
 
 ul.tabs { margin: 0; padding: 0; float: left; list-style: none; height: 32px; border-bottom: 1px solid #999; border-left: 1px solid #999; width: 100%; } ul.tabs li { float: left; margin: 0; padding: 0; height: 31px; line-height: 31px; border: 1px solid #999; border-left: none; margin-bottom: -1px; overflow: hidden; position: relative; background: #e0e0e0; } ul.tabs li a { text-decoration: none; color: #000; display: block; font-size: 1.2em; padding: 0 20px; border: 1px solid #fff; outline: none; } ul.tabs li a:hover { background: #ccc; } html ul.tabs li.active, html ul.tabs li.active a:hover { background: #fff; border-bottom: 1px solid #fff; }
 .tab_container { border: 1px solid #999; border-top: none; overflow: hidden; clear: both; float: left; width: 100%; background: #fff; } .tab_content { padding: 20px; font-size: 1.2em; }
+
+.description_content_thumb h5{
+	margin: 8px 0px;
+	padding: 0px;
+	text-align: left;
+}
+div.message h5{
+	background: #393942;
+	color: #fff;
+	padding: 30px 20px;
+}
+
+div.monito {
+	float: left;
+	margin-right: 25px;
+	background-image: url(../);
+}
+div.message {
+	float: left;
+	background: url(/static/img/talk.png) no-repeat left 70%;
+	padding-left: 48px;
+	width: 380px;
+}
+
+#shadow div.container div.row div.span12 div.message h5 a {
+	color: #fff;
+	background-color: #a40000;
+	padding: 1px 5px;
+	margin-top: 5px;
+}
+
+div.mono-message {
+	overflow: hidden;
+	width: 770px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.subtitle{
+	color: #A40000;
+}
+
+span.sp1 {
+	font-sizeont:'Lato', sans-serif;
+	font-size: .9em;
+	line-height: 25px;
+}
