@@ -55,7 +55,7 @@ MEDIA_ROOT =  '/var/www2/vivilox-server/static_server/media/'
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
-MEDIA_URL = 'http://192.168.0.123:8000/media/'
+MEDIA_URL = 'http://localhost:8000/media/'
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -65,7 +65,7 @@ STATIC_ROOT = '/var/www2/vivilox-server/static_server/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = 'http://192.168.0.123:8000/static/'
+STATIC_URL = 'http://localhost:8000/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -106,10 +106,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-
-
-
-
 ROOT_URLCONF = 'vivilox.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -129,7 +125,7 @@ AUTH_PROFILE_MODULE = 'vivilox.apps.accounts.models.UserProfile'
 
 # PAYPAL CONFIGURATION 
 PAYPAL_RECEIVER_EMAIL = "seller_1348879530_biz@newemage.com"
-SITE_DOMAIN = "http://192.168.0.123:8000/"
+SITE_DOMAIN = "http://localhost:8000/"
 
 
 WATERMARKING_QUALITY = 100

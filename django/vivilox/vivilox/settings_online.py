@@ -105,10 +105,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-
-
-
-
 ROOT_URLCONF = 'vivilox.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -138,7 +134,15 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
+    'vivilox.apps.home.context_processors.latest_tweet',
+    'vivilox.apps.home.context_processors.top_rated_items',
+    'vivilox.apps.home.context_processors.categories',
+    'vivilox.apps.home.context_processors.top_rated_contest',
 )
+TWITTER_USER = "viviloxart"
+TWITTER_TIMEOUT = 360
+
+
 
 
 INSTALLED_APPS = (
@@ -206,3 +210,6 @@ EMAIL_HOST_PASSWORD = 'mailbox_ViviloX.2012'
 DEFAULT_FROM_EMAIL = 'info@vivilox.webfactional.com'
 SERVER_EMAIL = 'info@vivilox.webfactional.com' 
 
+# Percentage of shares 
+CONTESTS_SHARE = 20
+STORE_SHARE = 20
