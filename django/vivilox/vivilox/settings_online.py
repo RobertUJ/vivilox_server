@@ -134,10 +134,10 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
-    # 'vivilox.apps.home.context_processors.latest_tweet',
-    # 'vivilox.apps.home.context_processors.top_rated_items',
-    # 'vivilox.apps.home.context_processors.categories',
-    # 'vivilox.apps.home.context_processors.top_rated_contest',
+    'vivilox.apps.home.context_processors.latest_tweet',
+    'vivilox.apps.home.context_processors.top_rated_items',
+    'vivilox.apps.home.context_processors.categories',
+    'vivilox.apps.home.context_processors.top_rated_contest',
 )
 TWITTER_USER = "viviloxart"
 TWITTER_TIMEOUT = 360
