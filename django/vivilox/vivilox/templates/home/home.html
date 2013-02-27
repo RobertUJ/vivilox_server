@@ -12,28 +12,32 @@
             <div class="container">
 		<!--VIVILOX Buy and Sell Concept Art-->
 		        <div class="row top-text">
-                <h1 class="home-h1 span8">A New <span class="white">CONCEPT ART</span> Marketplace For....</h1>
-                <p class="home-p span4">Movies - Video Games - Apps - Animation - Comic Books - Art Commissions - And more!</p>
+                <div class="span8">
+                    <h3 class="home-h3">We are a visual developement marketplace For....</h3>
+                </div>
+                <div class="span4">
+                    <p class="home-p">Movies - Video Games - Apps - Animation - Anime - Comic Books - And more!</p>
+                </div>
 	            </div><!--End Row--> 
 
                 <div class="row">
-                    <div class="">
+                    <div class=" span12">
                         <div id="wrapper">
                                 <div class="slider-wrapper theme-default">
                                     <div id="slider" class="nivoSlider">
-                                        <img src="{{ STATIC_URL }}img/slide/toystory.jpg" data-thumb="{{ STATIC_URL }}img/slide/toystory.jpg" alt="" />
-                                        <img src="{{ STATIC_URL }}img/slide/walle.jpg" data-thumb="{{ STATIC_URL }}img/slide/walle.jpg" alt="" data-transition="slideInLeft" />
-                                        <img src="{{ STATIC_URL }}img/slide/nemo.jpg" data-thumb="{{ STATIC_URL }}img/slide/nemo.jpg" alt="" />
+                                        <img src="{{ STATIC_URL }}img/slide/Slide_01.jpg" data-thumb="{{ STATIC_URL }}img/slide/slide_01.jpg" alt=""  />
+                                        <img src="{{ STATIC_URL }}img/slide/Slide_02.jpg" data-thumb="{{ STATIC_URL }}img/slide/slide_02.jpg" alt=""  />
+                                        <img src="{{ STATIC_URL }}img/slide/Slide_03.jpg" data-thumb="{{ STATIC_URL }}img/slide/slide_03.jpg" alt=""  />
+                      					<img src="{{ STATIC_URL }}img/slide/Slide_04.jpg" data-thumb="{{ STATIC_URL }}img/slide/slide_04.jpg" alt=""  /> 
+                    					<img src="{{ STATIC_URL }}img/slide/Slide_05.jpg" data-thumb="{{ STATIC_URL }}img/slide/slide_05.jpg" alt=""  />
                                     </div>
                                 </div>
                         </div>
                     </div>
                 </div>
 
-                    <div class="row color-box">
-                    
-
-			<div class="video-home span4">
+            <div class="row color-box">
+ 			<div class="video-home span4">
                         <div id="embed-video-home">
                             <img id="video_" src="{{ STATIC_URL }}img/video-placeholder.jpg" alt="Vivilox">
                         </div>
@@ -70,20 +74,21 @@
                 </div>
                 <div class="row">
                     <div class="span6">
-                    <h3 class="features-h3-projects">Top Rated Projects</h3>
+                    <h3 class="features-h3-projects">Top Rated Contests</h3>
                         <div class="project-thumb-img">
                         {% for contest in objContest %}
                             <div class="span2">
                              {% thumbnail contest.logo "140x110" crop="50% center" as im %}
                                 <a href="{% url contest_details_view contest.id  %}">
-                                <div class="wrapper_thumb" style="width:{{im.width}}; height:{{im.height}};" >
+                                <div class="wrapper_thumb" style="width:{{im.width}}px; height:{{im.height}}px;" >
                                     <img class="img_thumb" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{contest.name}}" />
-                                    <div class="description_thumb" style="width:{{im.width}}; height:{{im.height}};" >
+                                    <div class="description_thumb" style="width:{{im.width}}px; height:{{im.height}}px;" >
                                         <div class="description_content_thumb">
                                             <p>
                                             <span class="cat">{{contest.category}}</span><br>
                                             <span class="title">{{contest.name}}</span><br>
-                                            {{contest.description|truncatewords:5}}</p>
+                                            {{contest.description|truncatewords:5}}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -95,28 +100,31 @@
                            <h3>No Contest</h3>
                         {%endfor%}
                         </div>
-                        <a class="more-red" href="{% url all_contest_view %}">View All Projects</a> 
-                        <a class="more-rated" href="{% url top_contest_view %}">View All Top Rated Proyects</a>
+                        <a class="more-red" href="{% url all_contest_view %}">View All Contests</a> 
+                        <a class="more-rated" href="{% url top_contest_view %}">View All Top Rated Contests</a>
                     </div>
                     <div class="span6">
-                    <h3 class="features-h3-projects">Top Rated Item from Store</h3>
+                    <h3 class="features-h3-projects">Top Rated Art</h3>
                         <div class="project-thumb-img">
                         {% for item in objStore %}
                             <div class="span2">
                             {% thumbnail item.image_sample "140x110" crop="50% center" as im %}
-                                <div class="wrapper_thumb" style="width:{{im.width}}; height:{{im.height}};" >
+                               <a class="" href="{% url image_details_view item.id  %}">
+                                <div class="wrapper_thumb" style="width:{{im.width}}px; height:{{im.height}}px;" >
                                     <img class="img_thumb" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{contest.name}}" />
-                                    <div class="description_thumb" style="width:{{im.width}}; height:{{im.height}};" >
+                                    <div class="description_thumb" style="width:{{im.width}}px; height:{{im.height}}px;" >
                                         <div class="description_content_thumb">
                                             <p>
-                                            <span class="cat">{{item.category}}</span><br>
-                                            <span class="title">{{item.title}}</span><br>
-                                            {{item.description|truncatewords:5}}</p>
+                                                <span class="cat">{{item.category}}</span><br>
+                                                <span class="title">{{item.title}}</span><br>
+                                                {{item.description|truncatewords:5}}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
+                             </a>   
                             {% endthumbnail %}
-                   
+                        
                             <a class="view-project" href="{% url image_details_view item.id  %}">view details</a>
                             </div>
                         {%empty%}
@@ -124,7 +132,7 @@
                         {%endfor%}
                         </div>
                         <a class="more-red" href="{% url store_view %}">View Store</a> 
-                        <a class="more-rated" href="{% url store_top_view %}">Top Rated Art</a>
+                        <a class="more-rated" href="{% url store_top_view %}">View All Top Rated Art</a>
                     </div>
                         
                 </div><!--End Row--> 
@@ -134,7 +142,7 @@
 <div style="width:auto; left:40%;top:40%;" id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Need Concept Art?</h3>
+    <h3 id="myModalLabel">How does it work?</h3>
   </div>
   <div style="max-height:500px;" class="modal-body">
     <p>One fine body…</p>

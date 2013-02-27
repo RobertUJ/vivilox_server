@@ -1,0 +1,24 @@
+{% extends 'bases/main_base.html' %}
+
+{% block title %} Message for {{user.name}} {% endblock %}
+
+{% block content %}
+	<div class="container">
+		<div class="row">
+	        <!--  Project Full Details  -->
+			<h3>{{title}}</h3>
+			<div class="span12">
+			<div class="mono-message">	
+				<div class="monito">
+					<img src="{{STATIC_URL}}img/monito.png" />
+				</div>
+				<div class="message">
+					{% autoescape off %}
+						{{message}}
+					{% endautoescape %}
+				</div>
+			</div>
+			</div>
+	    </div>
+	</div>
+{% endblock content %}

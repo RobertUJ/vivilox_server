@@ -15,7 +15,12 @@
         </div>
     </div>
         <div class="row">
-            <div class="span12"><h3>VIVILOX CONCEPT ART STORE</h3></div>
+            <div class="span12">
+                <h3 id="cat_name">VIVILOX concept art Store</h3>
+                <span class="sp1">CLIENTS- Choose the designs you need for your project in once convenient place. You will be able to immediately own and download your purchases.<br />
+                ARTISTS- Do you have awesome designs and ideas for cool art? Post them for Sale - it's FREE!</span>
+                
+            </div>
         </div>
         <div class="row select-store">
             <div class="span3">
@@ -30,20 +35,6 @@
                     </select>
                 </form>
             </div>
-            <!--
-            <div class="span3">
-                <select>
-                    <option>Price</option>
-                    <option>Price</option>
-                </select>
-            </div>
-            <div class="span3">
-                <select>
-                    <option>Show</option>
-                    <option>12 items</option>
-                </select>
-            </div>
-            -->
             <div class="span3"> 
                 {% if user.is_authenticated and user.profile.user_type == "2" %}
                     <a class="yellow" href="{% url store_add_item_view %}">Add Your Art!</a>
@@ -58,22 +49,45 @@
                     <a href="{% url image_details_view item.id %}"  class="proposal-thumb-link">
                         {% if item.sold %}
                             {% thumbnail item.image_sample "158x158" colorspace="GRAY" crop="50% center" as im %}
-                                <img src="{{ im.url|watermark:'soldmini,scale=0.5,position=110x110' }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{item.title}}">
+                                <div class="wrapper_thumb" style="width:{{im.width}}; height:{{im.height}};" >
+                                    <img src="{{ im.url|watermark:'soldmini,scale=0.5,position=110x110' }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{item.title}}">
+                                        <div class="description_thumb" style="width:{{im.width}}; height:{{im.height}};" >
+                                            <div class="description_content_thumb">
+                                                <p>
+                                                    <span class="cat">{{item.category}}</span><br>
+                                                    <span class="title">{{item.title}}</span><br>
+                                                    {{item.description|truncatewords:5}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                </div>
                             {% endthumbnail %}
                         {% else %} 
                             {% thumbnail item.image_sample "158x158" crop="50% center" as im %}
+                            <div class="wrapper_thumb" style="width:{{im.width}}; height:{{im.height}};" >
                                 <img src="{{ im.url|watermark:'viviloxmark,scale=0.3,position=5x65' }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{item.title}}">
+                                    <div class="description_thumb" style="width:{{im.width}}; height:{{im.height}};" >
+                                        <div class="description_content_thumb">
+                                            <p>
+                                                <span class="cat">{{item.category}}</span><br>
+                                                <span class="title">{{item.title}}</span><br>
+                                                <span class="title">$ {{item.price|floatformat:2}}</span><br>
+
+                                                {{item.description|truncatewords:5}}
+                                            </p>
+                                        </div>
+                                    </div>
+                            </div>
                             {% endthumbnail %}
                         {% endif %}
                     </a>
-                    <span class="producto-title">{{item.title}}</span><br>
-                    <span class="price">Price: $ {{item.price|floatformat:2}} </span>
                 </div>
             {% empty %}
                 No Items in Store
             {% endfor %}
         </div>
 
+<div class="row">
 <div class="span12">
         <div class="pagination">
             <span class="step-links">
@@ -87,7 +101,7 @@
             </span>
         </div>
 </div>
-       
+</div>       
         </div>
         <!--End Container-->
 
@@ -95,12 +109,49 @@
 
 {% block footer_extrajs %}
 <script type="text/javascript">
-    $(document).ready(function(){
+    function inicio(){
         $("#id_category").val('{{idCat}}');
         $("#id_category").on('change',function(){
             $("#frmCategory").submit();
         });
-    });
+
+        // description img
+        $('div.description_thumb').each(function(){
+            var div = $(this);
+            div.parent().css('width', $(this).siblings('img').width());
+            div.css('opacity', 0.6).css('width', $(this).siblings('img').width()).css('display', 'block');
+            div.css('top',105);
+        });
+
+        $(".wrapper_thumb").on({
+            mouseenter:show_desc,
+            mouseleave:hide_desc
+        });
+    }
+    
+    function show_desc(){
+        $(this).children('.description_thumb').stop()
+        .animate({
+            opacity:0.9,
+            top:55
+        },400);
+        $(this).children('img').stop().animate({
+            opacity:0.7
+        },400); 
+    }
+    function hide_desc(){
+        $(this).children('.description_thumb').stop()
+        .animate({
+            top:105,
+            opacity:0.6
+        },400); 
+
+        $(this).children('img').stop().animate({
+            opacity:1
+        },400); 
+    }
+
+    $(document).on("ready",inicio);
 </script>
 {% endblock %}
 

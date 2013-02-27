@@ -4,19 +4,15 @@
 
 {% block content %}
 <div class="container">
-	<div id="cont_breadcrumb" class="row">
-        <div class="span12">
-            <ul class="breadcrumb">
-              <li><a href=" {% url main_view %} ">Home</a> <span class="divider">|</span></li>
-              <li><a href=" {% url new_add_contest_view %} ">Select Category</a> <span class="divider">|</span></li>
-              <li  >Create Contest<span class="divider">|</span></li>
-              <li class="active" >Payment</li>
-            </ul>
-        </div>
+	 <div class="row steps-str">
+        <div class="span4 step1"><h4 class=''><span>Step1: Select Category</span></h4></div>
+        <div class="span4 step2"><h3 class='up_item'><span>Step2: Contest Details</span></h3></div>
+        <div class="span4 step3"><h4 class=''><span>Step 3: Pay Contest</span></h4></div>
     </div>
+    
 	<div class="row">
-		<h3>Step 2:  Contest Details</h3>
-		<hr>
+		
+	</div>
 		<div class="span12"><h3>{{cat.name}} {{ request.session.cat }}</h3></div>
 		
 		<form id="frmContest" name="frmContest" method="POST" action="." enctype='multipart/form-data'>
@@ -29,7 +25,7 @@
 			{% else %}
 				<div class="control-group">
 			{% endif %}
-				<label class="control-label" for="name">Name Contest:</label>
+				<label class="control-label" for="name">Contest Name:</label>
 				<div class="controls">
 					{{ frmContest.name }}
 					{% if frmContest.name.errors %}
@@ -170,9 +166,7 @@
 			</div>
 			
 		</form>
-
-    </div>
-</div><!--End Container-->
+ </div><!--End Container-->
 
 {% endblock content %}
 

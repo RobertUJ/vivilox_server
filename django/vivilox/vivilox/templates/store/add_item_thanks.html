@@ -12,18 +12,19 @@
 
         <div class="row">
             <div class="span12">
-                <h3 class="">Thank you {{user.First_Name}} your art is now in the store!</h3>     <!--  Project Full Details  -->
+                <h3>
+                    You are done! Your art is now posted for sale in the store! <br>     <!--  Project Full Details  -->
+                    Thank you for choosing VIVILOX!
+                </h3>
             </div>
         </div>
-               <div class="row border-top">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sed lectus libero, sed pharetra metus. Morbi quis condimentum dui. Ut id nisi sapien. Quisque sit amet posuere nibh. Aliquam sed neque a diam dictum egestas semper sit amet magna.
-                    </p>
-                </div>
-                <div class="row">
-                   <a class="cont-shopping5" href="{% url my_store_view %}">Go to Profile</a>
-                   <a class="cont-shopping5" href="{% url store_view %}">Go to Store</a>
-            	</div>
-    </div>
+        <div class="row">
+            <div class="span12">
+                <h4>Where would you like to go now?</h4>
+                <a class="cont-shopping5" href="{% url store_add_item_view %}">Post More Art</a>
+                <a class="cont-shopping5" href="{% url store_view %}">STORE</a>
+                <a class="cont-shopping5" href="{% url all_contest_view %}">CONTESTS</a>
+    	   </div>
+        </div>
 </div>
 {% endblock content %}

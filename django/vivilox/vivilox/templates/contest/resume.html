@@ -4,23 +4,21 @@
 
 {% block content %}
 <div class="container">
-	<div  id="cont_breadcrumb" class="row">
-        <div class="span12">
-            <ul class="breadcrumb">
-              <li><a href=" {% url main_view %} ">Home</a> <span class="divider">|</span></li>
-              <li><a href=" {% url new_add_contest_view %} ">Select Category</a> <span class="divider">|</span></li>
-              <li>Buid Contest<span class="divider">|</span></li>
-              <li class="active" >Pay Contest</li>
-            </ul>
-        </div>
+	<div class="row steps-str">
+        <div class="span4 step1"><h4 class=''><span>Step1: Select Category</span></h4></div>
+        <div class="span4 step2"><h4 class=''><span>Step2: Contest Details</span></h4></div>
+        <div class="span4 step3"><h3 class='up_item'><span>Step 3: Pay Contest</span></h3></div>
     </div>
+    
 	<div class="row">
+	<div class="span12">
 		{{infoContest.name}} <br>
 		{{infoContest.category}} <br>
 		{{infoContest.industry}} <br>
 		{{infoContest.total_cost}} <br>
 		{{infoContest.duration}} <br>
 		{{infoContest.date_end|date}}
+	</div>
     </div>
 </div><!--End Container-->
 

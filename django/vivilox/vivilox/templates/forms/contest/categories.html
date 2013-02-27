@@ -4,21 +4,15 @@
 
 {% block content %}
 <div class="container">
-	<div id="cont_breadcrumb" class="row">
-        <div class="span12">
-            <ul class="breadcrumb">
-              <li><a href=" {% url main_view %} ">Home</a> <span class="divider">|</span></li>
-              <li >Select Category<span class="divider">|</span></li>
-              <li class="active" >Create Contest<span class="divider">|</span></li>
-              <li class="active" >Payment</li>
-            </ul>
-        </div>
+	<div class="row steps-str">
+        <div class="span4 step1"><h3 class='up_item'><span>Step1: Select Category</span></h3></div>
+        <div class="span4 step2"><h4 class=''><span>Step2: Contest Details</span></h4></div>
+        <div class="span4 step3"><h4 class=''><span>Step 3: Pay Contest</span></h4></div>
     </div>
+    <h3 id="cat_name">Select the category that best describes the project you need Concept Art for.</h3>
 	<div class="row">
-		<h3>Step 1:  Select Category</h3>
-		<hr>
 		{% for c in cats  %}
-			<div class="span4">
+			<div class="span6 add-contest">
 				<div class='cont_desc_cont' >
 					<h3>{{c.name}}</h3>
 					<p>
