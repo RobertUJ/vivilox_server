@@ -138,7 +138,6 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     # 'vivilox.apps.home.context_processors.top_rated_items',
     # 'vivilox.apps.home.context_processors.categories',
     # 'vivilox.apps.home.context_processors.top_rated_contest',
-    # 'vivilox.apps.home.context_processors.top_rated_contest',
 )
 TWITTER_USER = "viviloxart"
 TWITTER_TIMEOUT = 360
